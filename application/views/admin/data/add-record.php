@@ -100,6 +100,7 @@
                 <div class="col-md-12">
                   <div class="col-sm-10">
                     <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="button" class="btn btn-secondary" onclick="back()">Back</button>
                   </div>
                 </div>
 
@@ -128,5 +129,9 @@
 
         document.getElementById("inputAge").value =  age;
         document.getElementById("inputA").value =  diffInMonths;
+    }
+
+    function back() {
+        window.location = "./records";
     }
   </script>

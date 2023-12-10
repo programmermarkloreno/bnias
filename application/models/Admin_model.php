@@ -88,6 +88,19 @@ class Admin_model extends CI_Model{
 	 		return false;
 	 	}
 	}
+
+	function total($tbl, $where){
+
+		if(!empty($where)){
+			$this->db->where($where);
+		}
+		$query = $this->db->get($tbl);
+		if($query->num_rows() > 0){
+			return count($query->result());
+		}else{
+			return 0;
+		}
+	}
 }
 
 ?>

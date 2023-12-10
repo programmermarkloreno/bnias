@@ -36,11 +36,11 @@
                     <th data-type="date" data-format="YYYY/DD/MM">Birthdate</th>
                     <th>Age</th>
                     <th>Age in Mo.</th>
-                    <th>Weight</th>
+                    <!-- <th>Weight</th>
                     <th>Height</th>
                     <th>Weight Stat</th>
                     <th>Height Stat</th>
-                    <th>Weight Ltht Stat</th>
+                    <th>Weight Ltht Stat</th> -->
                     <th>Action</th>
                   </tr>
                 </thead>
@@ -56,13 +56,15 @@
                                    "<td>".$element->birthdate."</td>".
                                    "<td>".$element->age."</td>". 
                                    "<td>".$element->age_in_months."</td>".
-                                   "<td>".$element->weight."</td>".
-                                   "<td>".$element->height."</td>".
-                                   "<td>".$element->weight_for_age_stat."</td>".
-                                   "<td>".$element->height_for_age_stat."</td>".
-                                   "<td>".$element->weight_for_ltht_stat."</td>".
-                                   "<td><button type='button' class='btn btn-primary' id='edit' value='".$element->id_record."' onclick='editRecord()'><i class='bi bi-pencil-square'></i></button></td>".
+                                   "<td><button type='button' class='btn btn-primary' id='edit' onclick='editRecord(".$element->id_record.")'><i class='bi bi-pencil-square'></i></button>
+                                      <button type='button' class='btn btn-primary' id='edit' onclick='viewRecord(".$element->id_record.")'><i class='bi bi-info-circle'></i></button></td>".
                                 "</tr>";
+
+                               //  "<td>".$element->weight."</td>".
+                               // "<td>".$element->height."</td>".
+                               // "<td>".$element->weight_for_age_stat."</td>".
+                               // "<td>".$element->height_for_age_stat."</td>".
+                               // "<td>".$element->weight_for_ltht_stat."</td>".
                     } ?>
                   <!-- <tr>
                     <td>Kylie Bishop</td>
@@ -89,9 +91,11 @@
         window.location.href = "addrecord";
       }
 
-      function editRecord() {
-        var id = document.getElementById("edit").value; //needs change in getting id
+      function editRecord(id) {
         window.location.href = "editrecord/"+id;
+      }
 
+      function viewRecord(id) {
+        window.location.href = "viewrecord/"+id;
       }
   </script>

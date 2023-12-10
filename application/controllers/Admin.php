@@ -22,7 +22,12 @@ class Admin extends CI_Controller
 
 	public function index(){
 
-		$data['title'] = "BNIAS | Dashboard";
+		$data = $this->datainfo($title='NIAS | Dashboard');
+
+		$table = 'tblrecord';
+		$data['totalMale'] = $this->Admin_model->total($table, 'sex=2');
+		$data['totalFemale'] = $this->Admin_model->total($table, 'sex=1');
+		$data['total'] = $this->Admin_model->total($table, '');
 
 		$this->load->view('admin/template/head', $data);
 		$this->load->view('admin/template/header', $data);
@@ -66,6 +71,20 @@ class Admin extends CI_Controller
 		$this->load->view('admin/template/header', $data);
 		$this->load->view('admin/template/side', $data);
 		$this->load->view('admin/data/edit-record', $data);
+		$this->load->view('admin/template/footer');
+	}
+
+	public function viewrecord(){
+
+		$data = $this->datainfo($title='BNIAS | View Record');
+        
+        $whereId = 'id_record='.$this->uri->segment(3);
+		$data['resdata'] = $this->load_records('tblrecord', $whereId);
+
+		$this->load->view('admin/template/head', $data);
+		$this->load->view('admin/template/header', $data);
+		$this->load->view('admin/template/side', $data);
+		$this->load->view('admin/data/view-record', $data);
 		$this->load->view('admin/template/footer');
 	}
 
@@ -114,7 +133,51 @@ class Admin extends CI_Controller
 				}
 				
 				break;
-			
+			case 'update':
+
+				$inputChildName = $this->input->post('inputChildName');
+				$inputGuardianName = $this->input->post('inputGuardianName');
+				$inputAddress = $this->input->post('inputAddress');
+				$inputSex = $this->input->post('inputSex');
+				$inputDate = $this->input->post('inputDate');
+				$inputWeight = $this->input->post('inputWeight');
+				$inputHeight = $this->input->post('inputHeight');
+				$inputAge = $this->input->post('inputAge');
+
+				$inputA = $this->input->post('inputA');
+				$inputB = $this->input->post('inputB');
+				$inputC = $this->input->post('inputC');
+				$inputD = $this->input->post('inputD');
+
+				$idRecord = $this->input->post('idRecord');
+				$where = "id_record = '".$idRecord."'";
+
+				$data = array(
+					'child_name' => $inputChildName,
+					'guardian_name' => $inputGuardianName,
+					'address' => $inputAddress,
+					'sex' => $inputSex,
+					'birthdate' => $inputDate,
+					'weight' => $inputWeight,
+					'height' => $inputHeight,
+					'age' => $inputAge,
+					'age_in_months' => $inputA,
+					'weight_for_age_stat' => $inputB,
+					'height_for_age_stat' => $inputC,
+					'weight_for_ltht_stat' => $inputD,
+					'responsible_user' => $this->session->user_name
+				);
+
+				$result = $this->Admin_model->update($where, 'tblrecord', $data);
+				 if($result){
+					$success = $this->response('scs', 'scsmsg', TRUE, 'Successfully updated record!');
+					redirect('Admin/viewrecord/'.$idRecord);
+			     }else {
+			     	$success = $this->response('err', 'errmsg', TRUE, 'No changes on record!');
+					redirect('Admin/viewrecord/'.$idRecord);
+			     }
+
+				break;
 			default:
 				// code...
 				break;
