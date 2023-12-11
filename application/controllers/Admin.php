@@ -10,6 +10,7 @@ class Admin extends CI_Controller
 {
 	 public function __construct(){
 		parent::__construct(); 
+		date_default_timezone_set('Asia/Manila');
     	// $this->load->library('email');
     	// date_default_timezone_set('Asia/Manila');
     	// if($this->session->userdata('user_type') != 1 && $this->session->userdata('user_type') != 2){
@@ -165,7 +166,8 @@ class Admin extends CI_Controller
 					'weight_for_age_stat' => $inputB,
 					'height_for_age_stat' => $inputC,
 					'weight_for_ltht_stat' => $inputD,
-					'responsible_user' => $this->session->user_name
+					'responsible_user' => $this->session->user_name,
+					'updated_at' => date('Y-m-d H:i:s')
 				);
 
 				$result = $this->Admin_model->update($where, 'tblrecord', $data);
@@ -222,7 +224,10 @@ class Admin extends CI_Controller
 			case 'edit':
 			    $userId = $this->session->user_id;
 				$where = "userId = '".$userId."'";
-				$data = array('name' => $this->input->post('fullName'));
+				$data = array(
+					'name' => $this->input->post('fullName'),
+					'update_date' => date('Y-m-d H:i:s')
+				);
 				$result = $this->Admin_model->update($where, 'tbluser', $data);
 				 if($result){
 					$success = $this->response('scs', 'scsmsg', TRUE, 'Successfully updated record!');

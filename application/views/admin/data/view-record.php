@@ -100,7 +100,12 @@
                   <label for="inputD" class="form-label">Weight for Lt/Ht Status</label>
                   <input type="text" class="form-control" name="inputD" id="inputD" value="<?php echo $resdata[0]->weight_for_ltht_stat ?>" disabled>
                 </div>
-
+                <div class="col-md-12">
+                  <div class="position-relative">
+                  <div class="position-absolute top-0 start-0"><small><p><i>Last Update: <?php echo $resdata[0]->updated_at ?></i></p></small></div>
+                  <div class="position-absolute top-0 end-0"><small><p><i>Responsible: <?php echo $resdata[0]->responsible_user ?></i></p></small></div>
+                </div>
+                </div><br><br>
                 <div class="col-md-12">
                   <div class="col-sm-10">
                     <button type="button" class="btn btn-secondary" onclick="back()">Back</button>

@@ -77,24 +77,24 @@
                 </div>
                 <div class="col-md-4">
                   <label for="inputAge" class="form-label">Age</label>
-                  <input type="text" class="form-control" name="inputAge" id="inputAge">
+                  <input readonly type="text" class="form-control" name="inputAge" id="inputAge">
                 </div>
 
                 <div class="col-md-6">
                   <label for="inputA" class="form-label">Age in Months</label>
-                  <input type="number" class="form-control" name="inputA" id="inputA">
+                  <input readonly type="number" class="form-control" name="inputA" id="inputA">
                 </div>
                 <div class="col-md-6">
                   <label for="inputB" class="form-label">Weight for Age Status</label>
-                  <input type="text" class="form-control" name="inputB" id="inputB" value="N">
+                  <input readonly type="text" class="form-control" name="inputB" id="inputB" value="N">
                 </div>
                 <div class="col-md-6">
                   <label for="inputC" class="form-label">Height for Age Status</label>
-                  <input type="text" class="form-control" name="inputC" id="inputC" value="N">
+                  <input readonly type="text" class="form-control" name="inputC" id="inputC" value="N">
                 </div>
                 <div class="col-md-6">
                   <label for="inputD" class="form-label">Weight for Lt/Ht Status</label>
-                  <input type="text" class="form-control" name="inputD" id="inputD" value="Ob">
+                  <input readonly type="text" class="form-control" name="inputD" id="inputD" value="Ob">
                 </div>
 
                 <div class="col-md-12">

@@ -92,24 +92,24 @@
                 </div>
                 <div class="col-md-4">
                   <label for="inputAge" class="form-label">Age</label>
-                  <input type="text" class="form-control" name="inputAge" id="inputAge" value="<?php echo $resdata[0]->age ?>">
+                  <input type="text" class="form-control" name="inputAge" id="inputAge" value="<?php echo $resdata[0]->age ?>" readonly>
                 </div>
 
                 <div class="col-md-6">
                   <label for="inputA" class="form-label">Age in Months</label>
-                  <input type="number" class="form-control" name="inputA" id="inputA" value="<?php echo $resdata[0]->age_in_months ?>">
+                  <input type="number" class="form-control" name="inputA" id="inputA" value="<?php echo $resdata[0]->age_in_months ?>" readonly>
                 </div>
                 <div class="col-md-6">
                   <label for="inputB" class="form-label">Weight for Age Status</label>
-                  <input type="text" class="form-control" name="inputB" id="inputB" value="<?php echo $resdata[0]->weight_for_age_stat ?>">
+                  <input type="text" class="form-control" name="inputB" id="inputB" value="<?php echo $resdata[0]->weight_for_age_stat ?>" readonly>
                 </div>
                 <div class="col-md-6">
                   <label for="inputC" class="form-label">Height for Age Status</label>
-                  <input type="text" class="form-control" name="inputC" id="inputC" value="<?php echo $resdata[0]->height_for_age_stat ?>">
+                  <input type="text" class="form-control" name="inputC" id="inputC" value="<?php echo $resdata[0]->height_for_age_stat ?>" readonly>
                 </div>
                 <div class="col-md-6">
                   <label for="inputD" class="form-label">Weight for Lt/Ht Status</label>
-                  <input type="text" class="form-control" name="inputD" id="inputD" value="<?php echo $resdata[0]->weight_for_ltht_stat ?>">
+                  <input type="text" class="form-control" name="inputD" id="inputD" value="<?php echo $resdata[0]->weight_for_ltht_stat ?>" readonly>
                 </div>
 
                 <div class="col-md-12">
