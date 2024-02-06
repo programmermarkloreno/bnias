@@ -41,12 +41,35 @@ class Admin extends CI_Controller
 
 		$data = $this->datainfo($title='BNIAS | Records');
 
-		$data['resdata'] = $this->load_records('tblrecord', '');
+		$data['resdata'] = $this->load_records('tblrecord', '', 'id_record');
 
 		$this->load->view('admin/template/head', $data);
 		$this->load->view('admin/template/header', $data);
 		$this->load->view('admin/template/side', $data);
 		$this->load->view('admin/data/records', $data);
+		$this->load->view('admin/template/footer');
+	}
+
+	public function checklist(){
+
+		$data = $this->datainfo($title='BNIAS | Checklist');
+
+		$this->load->view('admin/template/head', $data);
+		$this->load->view('admin/template/header', $data);
+		$this->load->view('admin/template/side', $data);
+		$this->load->view('admin/checklist', $data);
+		$this->load->view('admin/template/footer');
+	}
+
+	public function logs(){
+
+		$data = $this->datainfo($title='BNIAS | Data Logs');
+		$data['logs'] = $this->load_records('tbl_logs', '', 'id');
+
+		$this->load->view('admin/template/head', $data);
+		$this->load->view('admin/template/header', $data);
+		$this->load->view('admin/template/side', $data);
+		$this->load->view('admin/logs', $data);
 		$this->load->view('admin/template/footer');
 	}
 
@@ -66,7 +89,7 @@ class Admin extends CI_Controller
 		$data = $this->datainfo($title='BNIAS | Edit Record');
         
         $whereId = 'id_record='.$this->uri->segment(3);
-		$data['resdata'] = $this->load_records('tblrecord', $whereId);
+		$data['resdata'] = $this->load_records('tblrecord', $whereId, 'id_record');
 
 		$this->load->view('admin/template/head', $data);
 		$this->load->view('admin/template/header', $data);
@@ -80,7 +103,7 @@ class Admin extends CI_Controller
 		$data = $this->datainfo($title='BNIAS | View Record');
         
         $whereId = 'id_record='.$this->uri->segment(3);
-		$data['resdata'] = $this->load_records('tblrecord', $whereId);
+		$data['resdata'] = $this->load_records('tblrecord', $whereId, 'id_record');
 
 		$this->load->view('admin/template/head', $data);
 		$this->load->view('admin/template/header', $data);
@@ -127,6 +150,7 @@ class Admin extends CI_Controller
 				$result = $this->Admin_model->insert_record('tblrecord', $data);
 				if($result){
 					$success = $this->response('scs', 'scsmsg', TRUE, 'Successfully added record!');
+					$this->Admin_model->setlogs($_SESSION['user_id'],$_SESSION['user_name'],$_SESSION['role'],'Added Record');
 					redirect('Admin/addrecord');
 				}else {
 					$error = $this->response('err', 'errmsg', TRUE, 'Failed to add record! Please try again!');
@@ -173,6 +197,11 @@ class Admin extends CI_Controller
 				$result = $this->Admin_model->update($where, 'tblrecord', $data);
 				 if($result){
 					$success = $this->response('scs', 'scsmsg', TRUE, 'Successfully updated record!');
+					$this->Admin_model->setlogs(
+						 $_SESSION['user_id'],
+						 $_SESSION['user_name'],
+						 $_SESSION['role'],
+						 'Update Record - (ID:'.$idRecord.')');
 					redirect('Admin/viewrecord/'.$idRecord);
 			     }else {
 			     	$success = $this->response('err', 'errmsg', TRUE, 'No changes on record!');
@@ -187,9 +216,9 @@ class Admin extends CI_Controller
 
 	}
 
-	public function load_records($table='', $where=''){
+	public function load_records($table='', $where='', $orderby=''){
 
-		$result = $this->Admin_model->load_record($table,$where);
+		$result = $this->Admin_model->load_record($table,$where,$orderby);
 		if($result){
 			return $result; 
 		}else
@@ -231,6 +260,11 @@ class Admin extends CI_Controller
 				$result = $this->Admin_model->update($where, 'tbluser', $data);
 				 if($result){
 					$success = $this->response('scs', 'scsmsg', TRUE, 'Successfully updated record!');
+					$this->Admin_model->setlogs(
+						 $_SESSION['user_id'],
+						 $_SESSION['user_name'],
+						 $_SESSION['role'],
+						 'Update Profile - (ID:'.$userId.')');
 
 					$session_array = array('islogged','user_name','user_id','name', 'lastUpdate');
 		            $this->session->unset_userdata($session_array);
@@ -273,6 +307,40 @@ class Admin extends CI_Controller
 		);
 
 		$this->session->set_userdata($sessionArray);
+	}
+
+	public function heightStatus($sex, $age){
+
+		$result = $this->Admin_model->heightStatus($sex, $age);
+		$msg = array('success' => false, 'data' => $result);
+		if($result){
+			$msg = array('success' => true, 'data' => $result);
+		}
+		echo json_encode($msg);
+
+	}
+
+	public function weightStatus($sex, $age){
+
+		$result = $this->Admin_model->weightStatus($sex, $age);
+		$msg = array('success' => false, 'data' => $result);
+		if($result){
+			$msg = array('success' => true, 'data' => $result);
+		}
+		echo json_encode($msg);
+
+	}
+
+	public function weightlength($age, $height){
+
+		$height = round($height / 0.5) * 0.5;
+		$result = $this->Admin_model->weightlength($age, $height);
+		$msg = array('success' => false, 'data' => $result);
+		if($result){
+			$msg = array('success' => true, 'data' => $result);
+		}
+		echo json_encode($msg);
+
 	}
 
 }

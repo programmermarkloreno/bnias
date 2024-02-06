@@ -116,19 +116,38 @@
         </ul>
       </li> --><!-- End Forms Nav -->
 
-      <li class="nav-item">
+      <!-- <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
           <i class="bi bi-layout-text-window-reverse"></i><span>Data</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
         <ul id="tables-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
           <li>
-            <a href="<?php echo base_url(); ?>Admin/records" class="active">
+            <a href="<?php //echo base_url(); ?>Admin/records" class="active">
               <i class="bi bi-circle"></i><span>Records</span>
             </a>
           </li>
         </ul>
-      </li><!-- End Tables Nav -->
+      </li> --><!-- End Tables Nav -->
 
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="<?php echo base_url(); ?>Admin/records">
+          <i class="bi bi-layout-text-window-reverse"></i><span>Data Records</span>
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="<?php echo base_url(); ?>Admin/checklist">
+          <i class="bi bi-check"></i>
+          <span>Checklist</span>
+        </a>
+      </li>
+      <?php if($_SESSION['role'] != 'user'){ ?>
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="<?php echo base_url(); ?>Admin/logs">
+          <i class="bi bi-layout-text-window-reverse"></i><span>Data Logs</span>
+        </a>
+      </li>
+      <?php } ?>
       <!-- <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#charts-nav" data-bs-toggle="collapse" href="#">
           <i class="bi bi-bar-chart"></i><span>Charts</span><i class="bi bi-chevron-down ms-auto"></i>

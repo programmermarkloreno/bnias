@@ -98,7 +98,8 @@
                       <button class="btn btn-primary w-100" type="submit">Create Account</button>
                     </div>
                     <div class="col-12">
-                      <p class="small mb-0">Already have an account? <a href="<?php echo base_url(); ?>Security">Log in</a></p>
+                      <!-- <p class="small mb-0">Already have an account? <a href="<?php //echo base_url(); ?>Security">Log in</a></p> -->
+                      <p class="small mb-0"><h5><a href="<?php echo base_url(); ?>Admin">Back</a></h5></p>
                     </div>
                   </form>
 

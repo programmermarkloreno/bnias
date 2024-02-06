@@ -64,12 +64,12 @@ class Admin_model extends CI_Model{
         }
 	}
 
-	function load_record($table='', $where=''){
+	function load_record($table='', $where='', $orderby=''){
 
 		if(!empty($where)){
 			$this->db->where($where);
 		}
-		$this->db->order_by('id_record', 'DESC');
+		$this->db->order_by($orderby, 'DESC');
 		$query = $this->db->get($table);
 		if($query->num_rows() > 0){
 			return $query->result();
@@ -100,6 +100,82 @@ class Admin_model extends CI_Model{
 		}else{
 			return 0;
 		}
+	}
+
+	function heightStatus($sex,$age){
+
+		$this->db->where('age', $age);
+		if($sex == 1){
+			$query = $this->db->get('tbl_girls_height');
+			if($query->num_rows() > 0){
+				return $query->result();
+			}else{
+				return false;
+			}
+		}else {
+			$query = $this->db->get('tbl_boys_height');
+			if($query->num_rows() > 0){
+				return $query->result();
+			}else{
+				return false;
+			}
+		}
+	}
+
+	function weightStatus($sex,$age){
+
+		$this->db->where('age', $age);
+		if($sex == 1){
+			$query = $this->db->get('tbl_girls_weight');
+			if($query->num_rows() > 0){
+				return $query->result();
+			}else{
+				return false;
+			}
+		}else {
+			$query = $this->db->get('tbl_boys_weight');
+			if($query->num_rows() > 0){
+				return $query->result();
+			}else{
+				return false;
+			}
+		}
+	}
+
+	function weightlength($age,$length){
+
+		$this->db->where('length', $length);
+		if($age <= 23){
+			$query = $this->db->get('tbl_weight_for_length');
+			if($query->num_rows() > 0){
+				return $query->result();
+			}else{
+				return false;
+			}
+		}else {
+			$query = $this->db->get('tbl_weight_for_length_2');
+			if($query->num_rows() > 0){
+				return $query->result();
+			}else{
+				return false;
+			}
+		}
+	}
+
+	public function setlogs($userId,$user,$role,$process){
+
+		$res = FALSE;
+		$data = array(
+				'user_id' => $userId,
+				'username' => $user,
+				'role' => $role,
+				'process' => $process
+			);
+		$result = $this->create('tbl_logs', $data);
+		if($result){
+			$res = TRUE;
+		}
+		return $res;
 	}
 }
 

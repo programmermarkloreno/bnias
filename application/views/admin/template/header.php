@@ -35,7 +35,17 @@
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
             <li class="dropdown-header">
               <h6><?php echo $this->session->name ?></h6>
-              <span>User</span>
+              <span><?php echo $_SESSION['role']; ?></span>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li>
+              <a class="dropdown-item d-flex align-items-center" href="<?php echo base_url(); ?>Security/register">
+                <i class="bi bi-person"></i>
+                <span>Create User</span>
+              </a>
             </li>
             <li>
               <hr class="dropdown-divider">

@@ -19,7 +19,9 @@
             <div class="card-body">
               <h5 class="card-title">Records</h5>
               <!-- <p>Add lightweight datatables to your project with using the <a href="https://github.com/fiduswriter/Simple-DataTables" target="_blank">Simple DataTables</a> library. Just add <code>.datatable</code> class name to any table you wish to conver to a datatable. Check for <a href="https://fiduswriter.github.io/simple-datatables/demos/" target="_blank">more examples</a>.</p> -->
+              <?php if($_SESSION['role'] != 'admin') {?>
               <button type="button" class="btn btn-primary" name="btn_add_record" onclick="addRecord()"><i class="bi bi-folder-plus me-1"></i> Add Record</button>
+              <?php }?>
               <!-- Table with stripped rows -->
               <table class="table datatable">
                 <thead>
@@ -45,9 +47,16 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <?php foreach($resdata as $key => $element) { 
+                  <?php 
+                        $isnotadmin = FALSE;
+                        if($_SESSION['role'] != 'admin'){
+                          $isnotadmin = TRUE;
+                        } 
+
+                        foreach($resdata as $key => $element) { 
                           $sex = ($element->sex == 1) ? 'F' : 'M';
-                          echo "<tr>".
+                          $tr = "";
+                          $tr = "<tr>".
                                    "<td>".$element->id_record."</td>".
                                    "<td>".$element->child_name."</td>".
                                    "<td>".$element->guardian_name."</td>".
@@ -56,10 +65,16 @@
                                    "<td>".$element->birthdate."</td>".
                                    "<td>".$element->age."</td>". 
                                    "<td>".$element->age_in_months."</td>".
-                                   "<td><button type='button' class='btn btn-primary' id='edit' onclick='editRecord(".$element->id_record.")'><i class='bi bi-pencil-square'></i></button>
-                                      <button type='button' class='btn btn-primary' id='edit' onclick='viewRecord(".$element->id_record.")'><i class='bi bi-info-circle'></i></button></td>".
-                                "</tr>";
+                                   "<td>";
+                              if($isnotadmin){
+                                $tr .= "<button type='button' class='btn btn-primary' id='edit' onclick='editRecord(".$element->id_record.")'><i class='bi bi-pencil-square'></i></button>";
+                                $tr .= "<button type='button' class='btn btn-primary' id='edit' onclick='viewRecord(".$element->id_record.")'><i class='bi bi-info-circle'></i></button>";
+                              }else{
+                                $tr .= "<button type='button' class='btn btn-primary' id='edit' onclick='viewRecord(".$element->id_record.")'><i class='bi bi-info-circle'></i></button>";
+                              }
+                                $tr .= "</td></tr>";
 
+                              echo $tr;
                                //  "<td>".$element->weight."</td>".
                                // "<td>".$element->height."</td>".
                                // "<td>".$element->weight_for_age_stat."</td>".

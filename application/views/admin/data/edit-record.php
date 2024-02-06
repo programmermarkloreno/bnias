@@ -57,7 +57,7 @@
 
                 <div class="col-md-6">
                   <label for="inputSex" class="form-label">Sex</label>
-                  <select class="form-select" aria-label="Default select example" name="inputSex" id="inputSex" required>
+                  <select class="form-select" aria-label="Default select example" name="inputSex" id="inputSex" readonly>
                     <?php
                         $isSelectedF = "selected";
                         $isSelectedM = "selected";
@@ -75,19 +75,19 @@
                 </div>
 
                 <div class="col-md-6">
-                  <label for="inputDate" class="col-sm-2 col-form-label">Birthdate</label>
-                  <input type="date" class="form-control" name="inputDate" id="inputDate" onchange="ageCalculator()" value="<?php echo $resdata[0]->birthdate ?>"required>
+                  <label for="inputDate" class="form-label">Birthdate</label>
+                  <input type="date" class="form-control" name="inputDate" id="inputDate" onchange="ageCalculator()" value="<?php echo $resdata[0]->birthdate ?>"readonly>
                   <div class="invalid-feedback">Please enter birthdate</div>
                 </div>
                 
                 <div class="col-md-4">
                   <label for="inputWeight" class="form-label">Weight (kg)</label>
-                  <input type="number" class="form-control" name="inputWeight" id="inputWeight" value="<?php echo $resdata[0]->weight ?>"required>
+                  <input type="number" class="form-control" name="inputWeight" id="inputWeight" value="<?php echo $resdata[0]->weight ?>"readonly>
                   <div class="invalid-feedback">Please enter weight (kg)</div>
                 </div>
                 <div class="col-md-4">
                   <label for="inputHeight" class="form-label">Height (cm)</label>
-                  <input type="number" class="form-control" name="inputHeight" id="inputHeight" value="<?php echo $resdata[0]->height ?>"required>
+                  <input type="number" class="form-control" name="inputHeight" id="inputHeight" value="<?php echo $resdata[0]->height ?>"readonly>
                   <div class="invalid-feedback">Please enter height (cm)</div>
                 </div>
                 <div class="col-md-4">

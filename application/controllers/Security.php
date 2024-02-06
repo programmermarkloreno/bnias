@@ -39,10 +39,11 @@ class Security extends CI_Controller
 	{
 		$username = $this->input->post('username');
 		$password = $this->input->post('password');
+		$yourRole = $this->input->post('yourRole');
 
 		$results = $this->Admin_model->check_credentials($username, md5($password));
 
-		if (count($results) === 0) {
+		if (count($results) === 0 || ($yourRole == '2' && $results[0]->role != 'user') || ($yourRole == '1' && $results[0]->role != 'admin')) {
 
 			$error = $this->response('err', 'errmsg', TRUE, 'Login Failed! Invalid information');
 			redirect('Security');
@@ -52,6 +53,7 @@ class Security extends CI_Controller
 			$success = $this->response('scs', 'scsmsg', TRUE, 'Successfully Login!');
 			$username = $results[0]->username;
 			$name = $results[0]->name;
+			$role = $results[0]->role;
 			$userId = $results[0]->userId;
 			$lastUpdate = $results[0]->update_date;
 
@@ -59,10 +61,11 @@ class Security extends CI_Controller
 			 	'user_name' => $username,
 				'user_id' => $userId,
 				'name' => $name,
+				'role' => $role,
 				'islogged' => true,
 				'lastUpdate' =>$lastUpdate
 			);
-
+			$this->Admin_model->setlogs($userId,$username,$role,'Login');
 			$this->session->set_userdata($sessionArray);
 			redirect('Security');
 			// echo 'successfully login '.json_encode($sessionArray);
@@ -89,6 +92,7 @@ class Security extends CI_Controller
 			$data = array(
 				'username' => $username,
 				'pass' => $password,
+				'role' => 'User',
 				'name' => $name,
 				'email' => $email,
 			);
@@ -96,6 +100,7 @@ class Security extends CI_Controller
 			$result = $this->Admin_model->create('tbluser', $data);
 			if($result){
 				$success = $this->response('scs', 'scsmsg', TRUE, 'Succesfully Registered!');
+				$this->Admin_model->setlogs('--', 'admin','admin','Registration');
 				redirect('Security/register');
 			}else {
 				$error = $this->response('err', 'errmsg', TRUE, 'Registration Failed! Please try again!');

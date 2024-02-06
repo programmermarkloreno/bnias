@@ -52,7 +52,7 @@
 
                 <div class="col-md-6">
                   <label for="inputSex" class="form-label">Sex</label>
-                  <select class="form-select" aria-label="Default select example" name="inputSex" id="inputSex" required>
+                  <select class="form-select" aria-label="Default select example" name="inputSex" id="inputSex" onchange="$.sexChange()" required>
                     <option value="1">Female</option>
                     <option value="2" selected>Male</option>
                   </select>
@@ -60,49 +60,71 @@
                 </div>
 
                 <div class="col-md-6">
-                  <label for="inputDate" class="col-sm-2 col-form-label">Birthdate</label>
-                  <input type="date" class="form-control" name="inputDate" id="inputDate" onchange="ageCalculator()" required>
+                  <label for="inputDate" class="form-label">Birthdate</label>
+                  <input type="date" class="form-control" name="inputDate" id="inputDate" max="<?php echo date("Y-m-d"); ?>" onchange="$.ageCalculator()" required>
                   <div class="invalid-feedback">Please enter birthdate</div>
                 </div>
-                
-                <div class="col-md-4">
-                  <label for="inputWeight" class="form-label">Weight (kg)</label>
-                  <input type="number" class="form-control" name="inputWeight" id="inputWeight" required>
-                  <div class="invalid-feedback">Please enter weight (kg)</div>
-                </div>
-                <div class="col-md-4">
-                  <label for="inputHeight" class="form-label">Height (cm)</label>
-                  <input type="number" class="form-control" name="inputHeight" id="inputHeight" required>
-                  <div class="invalid-feedback">Please enter height (cm)</div>
-                </div>
+
                 <div class="col-md-4">
                   <label for="inputAge" class="form-label">Age</label>
                   <input readonly type="text" class="form-control" name="inputAge" id="inputAge">
                 </div>
-
-                <div class="col-md-6">
+                <div class="col-md-4">
                   <label for="inputA" class="form-label">Age in Months</label>
                   <input readonly type="number" class="form-control" name="inputA" id="inputA">
                 </div>
+                <div class="col-md-4">
+                  <label for="inputD" class="form-label">Weight for Lt/Ht Status</label>
+                  <input readonly type="text" class="form-control" name="inputD" id="inputD" required>
+                </div>
+
+                <div class="col-md-6">
+                  <label for="inputWeight" class="form-label">Weight (kg)</label>
+                  <input type="number" step="any" class="form-control" name="inputWeight" id="inputWeight" oninput="$.getWeightStatus()" required>
+                  <div class="invalid-feedback">Please enter weight (kg)</div>
+                </div>
+                <div class="col-md-6">
+                  <label for="inputHeight" class="form-label">Height (cm)</label>
+                  <input type="number" step="any" class="form-control" name="inputHeight" id="inputHeight" oninput="$.getHeightStatus()" required>
+                  <div class="invalid-feedback">Please enter height (cm)</div>
+                </div>
+                
+                
                 <div class="col-md-6">
                   <label for="inputB" class="form-label">Weight for Age Status</label>
-                  <input readonly type="text" class="form-control" name="inputB" id="inputB" value="N">
+                  <input readonly type="text" class="form-control" name="inputB" id="inputB" required>
                 </div>
                 <div class="col-md-6">
                   <label for="inputC" class="form-label">Height for Age Status</label>
-                  <input readonly type="text" class="form-control" name="inputC" id="inputC" value="N">
+                  <input readonly type="text" class="form-control" name="inputC" id="inputC" required>
                 </div>
-                <div class="col-md-6">
-                  <label for="inputD" class="form-label">Weight for Lt/Ht Status</label>
-                  <input readonly type="text" class="form-control" name="inputD" id="inputD" value="Ob">
+                
+                <div class="col-12">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="invalidCheck" required>
+                    <label class="form-check-label" for="invalidCheck">
+                      Agree to give consent for child's personal information?
+                    </label>
+                    <div class="invalid-feedback">
+                      You must agree before submitting.
+                    </div>
+                  </div>
                 </div>
 
                 <div class="col-md-12">
                   <div class="col-sm-10">
                     <button type="submit" class="btn btn-primary">Submit</button>
-                    <button type="button" class="btn btn-secondary" onclick="back()">Back</button>
+                    <button type="button" class="btn btn-secondary" onclick="$.back()">Back</button>
                   </div>
                 </div>
+
+                <!-- <div class="form-group">
+                  <div class="btn btn-default btn-file">
+                    <i class="fas fa-cloud-upload-alt"></i> Upload Photo
+                    <input class="form-control" type="file" name="file_upload[]" id="file_upload" accept=".docx, .pdf, .xlsx, .csv" multiple required>
+                  </div> -->
+                   <!--  <p class="help-block">Max. </p> -->
+              </div>
 
               </form><!-- End General Form Elements -->
 
@@ -115,7 +137,17 @@
 
   </main><!-- End #main -->
   <script type="text/javascript">
-    function ageCalculator() {
+
+(function ($) {
+    'use strict';
+
+    var heightData = "";
+    var weightData = "";
+    var weightLengthData = "";
+    var setMonthAge = "";
+    var setSex = "";
+
+    $.ageCalculator = function() {
 
         var userinput = document.getElementById("inputDate").value;
         var dob = new Date(userinput);
@@ -129,9 +161,236 @@
 
         document.getElementById("inputAge").value =  age;
         document.getElementById("inputA").value =  diffInMonths;
+
+        setMonthAge = document.getElementById("inputA").value;
+        setSex = document.getElementById("inputSex").value;
+        if(setMonthAge){
+           $.setHeightStatus(setMonthAge, setSex);
+           $.setWeightStatus(setMonthAge, setSex);
+        }
     }
 
-    function back() {
+    $.back = function() {
         window.location = "./records";
     }
+
+    $.sexChange = function() {
+
+        document.getElementById("inputB").value = "";
+        document.getElementById("inputC").value = "";
+        document.getElementById("inputD").value = "";
+        document.getElementById("inputWeight").value = "";
+        document.getElementById("inputHeight").value = "";
+
+        setMonthAge = document.getElementById("inputA").value;
+        setSex = document.getElementById("inputSex").value;
+        if(setMonthAge){
+           $.setHeightStatus(setMonthAge, setSex);
+           $.setWeightStatus(setMonthAge, setSex);
+        }
+    }
+
+    $.getHeightStatus = function (){
+
+        let setHeight = document.getElementById("inputHeight").value;
+        var issetDate = document.getElementById("inputDate").value;
+        if(issetDate && heightData && setHeight){
+
+          let severelyStunted = heightData[0].severely_stunted;
+          let stuntedFrom     = heightData[0].stunted_from;
+          let stuntedTo       = heightData[0].stunted_to;
+          let normalFrom      = heightData[0].normal_from;
+          let normalTo        = heightData[0].normal_to;
+          let tall            = heightData[0].tall;
+    
+          if(setHeight && setHeight >= severelyStunted && setHeight <= tall){
+
+            if(setHeight <= severelyStunted){
+              document.getElementById("inputC").value = "Severely Stunted";
+            }
+            if(setHeight >= stuntedFrom && setHeight <= stuntedTo){
+              document.getElementById("inputC").value = "Stunted";
+            }
+            if(setHeight >= normalFrom && setHeight <= normalTo){
+              document.getElementById("inputC").value = "Normal";
+            }
+            if(setHeight >= tall){
+              document.getElementById("inputC").value = "Tall";
+            }
+          }else{
+            document.getElementById("inputC").value = "";
+            console.log('Height out of range.');
+          }
+
+          $.setWeightLength(setMonthAge, setHeight);
+          if(weightLengthData){
+            $.getWeightLength();
+          }else {
+            console.log("A problem on getting weight length.");
+          }
+    }else{
+      console.log('Birthdate or height not set.');
+    }
+  }
+
+  $.getWeightStatus = function (){
+
+        let setHeight = document.getElementById("inputHeight").value;
+        let setWeight = document.getElementById("inputWeight").value;
+        var issetDate = document.getElementById("inputDate").value;
+        if(issetDate && weightData && setWeight){
+
+          let severelyUnderweight = weightData[0].sev_underweight;
+          let underweight_from    = weightData[0].under_from;
+          let underweight_to      = weightData[0].under_to;
+          let normalFrom          = weightData[0].normal_from;
+          let normalTo            = weightData[0].normal_to;
+
+          if(setWeight && setWeight >= severelyUnderweight && setWeight <= normalTo){
+            if(setWeight <= severelyUnderweight){
+              document.getElementById("inputB").value = "Severely Under Weight";
+            }
+            if(setWeight >= underweight_from && setWeight <= underweight_to){
+              document.getElementById("inputB").value = "Under Weight";
+            }
+            if(setWeight >= normalFrom && setWeight <= normalTo){
+              document.getElementById("inputB").value = "Normal";
+            }
+          }else{
+            document.getElementById("inputB").value = "";
+            console.log('Weight out of range.');
+          }
+            
+        }else{
+          document.getElementById("inputB").value = "";
+          console.log("Birthdate or weight not set.");
+        }
+
+        if(setHeight){
+          $.setWeightLength(setMonthAge, setHeight);
+          if(weightLengthData){
+            $.getWeightLength();
+          }else {
+            console.log("A problem on getting weight length.");
+          }
+        }
+    }
+
+    $.getWeightLength = function (){
+
+      let setWeight = document.getElementById("inputWeight").value;
+      var issetDate = document.getElementById("inputDate").value;
+      let setHeight = document.getElementById("inputWeight").value;
+
+      if(issetDate && weightLengthData && setWeight && setHeight){
+
+          let severely_wasted    = weightLengthData[0].severely_wasted;
+          let wasted_from        = weightLengthData[0].wasted_from;
+          let wasted_to          = weightLengthData[0].wasted_to;
+          let normal_from        = weightLengthData[0].normal_from;
+          let normal_to          = weightLengthData[0].normal_to;
+          let overweight_from    = weightLengthData[0].overweight_from;
+          let overweight_to      = weightLengthData[0].overweight_to;
+          let obese              = weightLengthData[0].obese;
+
+          if(setWeight && setWeight >= severely_wasted && setWeight <= obese){
+
+            if(setWeight <= severely_wasted){
+              document.getElementById("inputD").value = "Severely Wasted";
+            }
+            if(setWeight >= wasted_from && setWeight <= wasted_to){
+              document.getElementById("inputD").value = "Wasted";
+            }
+            if(setWeight >= normal_from && setWeight <= normal_to){
+              document.getElementById("inputD").value = "Normal";
+            }
+            if(setWeight >= overweight_from && setWeight <= overweight_to){
+              document.getElementById("inputD").value = "Overweight";
+            }
+            if(setWeight >= obese){
+              document.getElementById("inputD").value = "Obese";
+            }
+
+          }else{
+            document.getElementById("inputD").value = "";
+            console.log('Weight Length out of range.');
+          }
+
+      }else {
+          document.getElementById("inputD").value = "";
+          console.log("Birth date, Weight, Height not set.");
+      }
+    }
+
+    $.setHeightStatus = function(monthAge, sex){
+      if(monthAge <= 71){
+        $.ajax({
+            url: '../Admin/heightStatus/'+sex+'/'+monthAge,
+            headers: {'X-Requested-With':'XMLHttpRequest'},
+            method: 'GET',
+            async: true,
+            dataType: 'json',
+            success: function(response){
+              if(response.success){
+                heightData = response.data;
+                console.log(heightData);
+              }      
+            },
+            error: function(xhr){
+              console.log(xhr.status +':'+xhr.statusText);
+            }
+          });
+      }else{
+         heightData = "";
+      }
+    }
+
+      $.setWeightStatus = function(monthAge, sex){
+        if(monthAge <= 71){
+          $.ajax({
+              url: '../Admin/weightStatus/'+sex+'/'+monthAge,
+              headers: {'X-Requested-With':'XMLHttpRequest'},
+              method: 'GET',
+              async: true,
+              dataType: 'json',
+              success: function(response){
+                if(response.success){
+                  weightData = response.data;
+                  console.log(weightData);
+                }      
+              },
+              error: function(xhr){
+                console.log(xhr.status +':'+xhr.statusText);
+              }
+            });
+        }else{
+           weightData = "";
+        }
+      }
+
+      $.setWeightLength = function(monthAge, height){
+
+        if(monthAge <= 71){
+          $.ajax({
+              url: '../Admin/weightlength/'+monthAge+'/'+height,
+              headers: {'X-Requested-With':'XMLHttpRequest'},
+              method: 'GET',
+              async: true,
+              dataType: 'json',
+              success: function(response){
+                if(response.success){
+                  weightLengthData = response.data;
+                  console.log(weightLengthData);
+                }      
+              },
+              error: function(xhr){
+                console.log(xhr.status +':'+xhr.statusText);
+              }
+            });
+        }else{
+           weightLengthData = "";
+        }
+      }
+
+})(jQuery);
   </script>

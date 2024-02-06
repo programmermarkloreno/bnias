@@ -29,6 +29,10 @@
   <!-- Template Main CSS File -->
   <link href="<?php echo base_url(); ?>assets/css/style.css" rel="stylesheet">
 
+  <!-- jQuery -->
+  <script src="<?php echo base_url(); ?>assets/vendor/jquery/jquery.min.js"></script>
+  <script src="<?php echo base_url();?>assets/vendor/jquery-ui/jquery-ui.min.js"></script>
+
 	<!-- <link rel="shortcut icon" type='image/x-icon' href="<?php //echo base_url(); ?>assets/img/icon/<?php //echo $profile[0]->company_icon; ?>"> -->
 
 </head>

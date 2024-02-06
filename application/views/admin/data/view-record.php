@@ -128,4 +128,5 @@
     function back() {
           window.location = "../records";
     }
+
 </script>

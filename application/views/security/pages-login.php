@@ -61,6 +61,16 @@
 
                   <form class="row g-3 needs-validation" novalidate action="<?php echo base_url();?>Security/login" method="post">
                     <div class="col-12">
+                      <label for="yourRole" class="form-label">Select Role</label>
+                      <div class="input-group has-validation">
+                        <select class="form-select form-control" name="yourRole" id="yourRole">
+                          <option value="1">Admin</option>
+                          <option value="2">User</option>
+                        </select>
+                      </div>
+                      <div class="invalid-feedback">Please select your role.</div>
+                    </div>
+                    <div class="col-12">
                       <label for="yourUsername" class="form-label">Username</label>
                       <div class="input-group has-validation">
                         <span class="input-group-text" id="inputGroupPrepend">@</span>
@@ -85,7 +95,7 @@
                       <button class="btn btn-primary w-100" type="submit">Login</button>
                     </div>
                     <div class="col-12">
-                      <p class="small mb-0">Don't have account? <a href="<?php echo base_url(); ?>Security/register">Create an account</a></p>
+                      <!-- <p class="small mb-0">Don't have account? <a href="<?php// echo base_url(); ?>Security/register">Create an account</a></p> -->
                     </div>
                   </form>
 
