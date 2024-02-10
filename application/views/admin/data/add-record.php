@@ -33,6 +33,11 @@
                       </div>
                   <?php  } ?>
               <!-- General Form Elements -->
+              <!-- <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                A simple danger alert—check it out!
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+              </div> -->
+
               <form class="row g-3 needs-validation" novalidate action="<?php echo base_url();?>Admin/record/submit" method="post">
                 <div class="col-md-6">
                   <label for="inputChildName" class="form-label">Child Full name</label>
@@ -147,6 +152,10 @@
     var setMonthAge = "";
     var setSex = "";
 
+    $(".alert").delay(4000).slideUp(300, function() {
+        $(this).alert('close');
+    });
+
     $.ageCalculator = function() {
 
         var userinput = document.getElementById("inputDate").value;
@@ -230,6 +239,7 @@
           }
     }else{
       console.log('Birthdate or height not set.');
+      alert("Birthdate or height not set.");
     }
   }
 

@@ -40,42 +40,47 @@
                   Fifth checkbox
                 </li>
               </ul> --><!-- End List Checkboxes and radios -->
+              <?php
+                    if($error['err'] != ''){
+                ?>
+                  <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <?php echo $error['errmsg']; ?>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                  </div>
+                <?php
+                  } elseif ($success['scs'] != '') { ?>
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                      <?php echo $success['scsmsg']; ?>
+                      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                <?php  } ?>
+                <div id="alert" class="" role="alert">
+                </div>
               <!-- General Form Elements -->
-              <form class="needs-validation" novalidate action="<?php //echo base_url();?>Admin/record/submit" method="post">
+              <form id="userform" class="needs-validation" action="<?php echo base_url();?>Admin/userchecklist" method="post" enctype="multipart/form-data" validate>
                 <!-- <div class="row mb-3">
                   <label for="inputText" class="col-sm-2 col-form-label">Text</label>
                   <div class="col-sm-10">
                     <input type="text" class="form-control">
                   </div>
                 </div> -->
-
                 <div class="row mb-3">
-                  <label for="inputNumber" class="col-sm-2 col-form-label">Users</label>
+                  <label for="inputNumber" class="col-sm-2 col-form-label">File Upload</label>
                   <div class="col-sm-10">
-                    <select class="form-select" name="selectUser" id="selectUser" required>
-                      <option selected>Select User</option>
-                      <?php
-                        if($users != NULL) {
-                          foreach($users as $key => $element) { 
-                              echo "<option value='".$element->userId."'>".$element->name."</option>";
-                           }
-                         }
-                      ?>
-                    </select>
+                    <input class="form-control" type="file" name="userfile" id="userfile" accept=".csv, .xlsx">
+                    <div class="invalid-feedback">Please enter height (cm)</div>
                   </div>
-                  <div class="invalid-feedback">Please enter sex</div>
                 </div>
 
                 <div class="row mb-3">
-                  <label class="col-sm-2 col-form-label">Show Files per User</label>
+                  <label class="col-sm-2 col-form-label"></label>
                   <div class="col-sm-10">
-                    <button type="submit" class="btn btn-primary">Show</button>
+                    <button type="submit" class="btn btn-primary">Upload</button>
                   </div>
                 </div>
 
               </form><!-- End General Form Elements -->
-
-              <h5 class="card-title">Files</h5>
+              <h5 class="card-title">My Files</h5>
               <!-- Table with stripped rows -->
               <table class="table datatable">
                 <thead>
@@ -103,6 +108,7 @@
                   ?>
                 </tbody>
               </table>
+              <!-- End Table with stripped rows -->
 
             </div>
           </div>
@@ -113,5 +119,43 @@
 
   </main><!-- End #main -->
   <script type="text/javascript">
+(function ($) {
+    'use strict';
 
+    $(".alert").delay(4000).slideUp(300, function() { $(this).alert('close'); });
+    // var d = document.getElementById("alert");
+    // $('#userform').on('submit', function (e) {
+    //       e.preventDefault();
+
+    //       $.ajax({
+    //         url: '../Admin/userchecklist',
+    //         type: "POST",
+    //         data: new FormData(this),
+    //         processData: false,
+    //         contentType: false,
+    //         async: true,
+    //         dataType: 'json',
+    //         success: function(response){
+    //           if(response.success){
+
+    //             d.className += " alert alert-success alert-dismissible fade show";
+    //             d.innerHTML += "Successfully upload.";
+    //             $(".alert").delay(4000).slideUp(300, function() { $(this).alert('close'); });
+    //               // window.top.location = base+'home/maintenance/company-logo/true';
+    //           }else{
+
+    //             d.className += " alert alert-info alert-dismissible fade show";
+    //             d.innerHTML += response.res;
+    //             $(".alert").delay(4000).slideUp(300, function() { $(this).alert('close'); });
+    //           }
+    //         },
+    //          error: function(xhr){
+    //             d.className += " alert alert-danger alert-dismissible fade show";
+    //             d.innerHTML += xhr.status+': '+xhr.statusText;
+    //             $(".alert").delay(4000).slideUp(300, function() { $(this).alert('close'); });
+    //         }
+   
+    //    });
+    // });
+})(jQuery);
   </script>

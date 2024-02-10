@@ -40,13 +40,14 @@
             <li>
               <hr class="dropdown-divider">
             </li>
-
+            <?php if($_SESSION['role'] == 'admin') {?>
             <li>
               <a class="dropdown-item d-flex align-items-center" href="<?php echo base_url(); ?>Security/register">
                 <i class="bi bi-person"></i>
                 <span>Create User</span>
               </a>
             </li>
+           <?php } ?>
             <li>
               <hr class="dropdown-divider">
             </li>

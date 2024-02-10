@@ -1,10 +1,11 @@
 <?php   
 defined('BASEPATH') OR exit('No direct script access allowed');
 
- // require __DIR__ .'/autoload.php';
 // require("./vendor/dompdf/dompdf/autoload.inc.php");
 // use Dompdf\Dompdf;
 // use Dompdf\Options; 
+use CodeIgniter\HTTP\Files\UploadedFile;
+use CodeIgniter\Files\File;
 
 class Admin extends CI_Controller
 {
@@ -47,17 +48,6 @@ class Admin extends CI_Controller
 		$this->load->view('admin/template/header', $data);
 		$this->load->view('admin/template/side', $data);
 		$this->load->view('admin/data/records', $data);
-		$this->load->view('admin/template/footer');
-	}
-
-	public function checklist(){
-
-		$data = $this->datainfo($title='BNIAS | Checklist');
-
-		$this->load->view('admin/template/head', $data);
-		$this->load->view('admin/template/header', $data);
-		$this->load->view('admin/template/side', $data);
-		$this->load->view('admin/checklist', $data);
 		$this->load->view('admin/template/footer');
 	}
 
@@ -112,6 +102,34 @@ class Admin extends CI_Controller
 		$this->load->view('admin/template/footer');
 	}
 
+	public function checklist(){
+
+		if($_SESSION['role'] == 'admin'){
+			$data = $this->datainfo($title='BNIAS | Admin Checklist');
+			$whererole = array('role' => 'user');
+			$data['users'] = $this->load_records('tbluser', $whererole, 'userId');
+			$data['files'] = $this->load_records('tbl_docs', '', 'id');
+
+			$this->load->view('admin/template/head', $data);
+			$this->load->view('admin/template/header', $data);
+			$this->load->view('admin/template/side', $data);
+			$this->load->view('admin/checklist', $data);
+			$this->load->view('admin/template/footer');
+		}else{
+
+			$data = $this->datainfo($title='BNIAS | User Checklist');
+			$whereUser = array('username' => $_SESSION['user_name']);
+			$data['files'] = $this->load_records('tbl_docs', $whereUser, 'id');
+
+			$this->load->view('admin/template/head', $data);
+			$this->load->view('admin/template/header', $data);
+			$this->load->view('admin/template/side', $data);
+			$this->load->view('user/userchecklist', $data);
+			$this->load->view('admin/template/footer');
+		}
+		
+	}
+
 	public function record($mode=""){
 
 		$mode = $this->uri->segment(3);
@@ -131,32 +149,37 @@ class Admin extends CI_Controller
 				$inputC = $this->input->post('inputC');
 				$inputD = $this->input->post('inputD');
 
-				$data = array(
-					'child_name' => $inputChildName,
-					'guardian_name' => $inputGuardianName,
-					'address' => $inputAddress,
-					'sex' => $inputSex,
-					'birthdate' => $inputDate,
-					'weight' => $inputWeight,
-					'height' => $inputHeight,
-					'age' => $inputAge,
-					'age_in_months' => $inputA,
-					'weight_for_age_stat' => $inputB,
-					'height_for_age_stat' => $inputC,
-					'weight_for_ltht_stat' => $inputD,
-					'responsible_user' => $this->session->user_name
-				);
+				if($inputB != NULL && $inputC != NULL && $inputD != NULL){
 
-				$result = $this->Admin_model->insert_record('tblrecord', $data);
-				if($result){
-					$success = $this->response('scs', 'scsmsg', TRUE, 'Successfully added record!');
-					$this->Admin_model->setlogs($_SESSION['user_id'],$_SESSION['user_name'],$_SESSION['role'],'Added Record');
-					redirect('Admin/addrecord');
-				}else {
-					$error = $this->response('err', 'errmsg', TRUE, 'Failed to add record! Please try again!');
+					$data = array(
+						'child_name' => $inputChildName,
+						'guardian_name' => $inputGuardianName,
+						'address' => $inputAddress,
+						'sex' => $inputSex,
+						'birthdate' => $inputDate,
+						'weight' => $inputWeight,
+						'height' => $inputHeight,
+						'age' => $inputAge,
+						'age_in_months' => $inputA,
+						'weight_for_age_stat' => $inputB,
+						'height_for_age_stat' => $inputC,
+						'weight_for_ltht_stat' => $inputD,
+						'responsible_user' => $this->session->user_name
+					);
+
+					$result = $this->Admin_model->insert_record('tblrecord', $data);
+					if($result){
+						$success = $this->response('scs', 'scsmsg', TRUE, 'Successfully added record!');
+						$this->Admin_model->setlogs($_SESSION['user_id'],$_SESSION['user_name'],$_SESSION['role'],'Added Record');
+						redirect('Admin/addrecord');
+					}else {
+						$error = $this->response('err', 'errmsg', TRUE, 'Failed to add record! Please try again!');
+						redirect('Admin/addrecord');
+					}
+				}else{
+					$error = $this->response('err', 'errmsg', TRUE, 'Failed to add record. Because weigth or height status is empty.');
 					redirect('Admin/addrecord');
 				}
-				
 				break;
 			case 'update':
 
@@ -341,6 +364,93 @@ class Admin extends CI_Controller
 		}
 		echo json_encode($msg);
 
+	}
+
+	public function userchecklist(){
+
+		$date = date('Y-m-d');
+		$date = str_replace( '-', '', $date);
+		$path = './docs/'.$_SESSION['user_name'].'/docs/'.$date;
+		$config['upload_path'] = $path;
+		
+		if (!is_dir($path)) {
+		    mkdir($path, 0777, TRUE);
+		}
+		$new_name = $_SESSION['user_name'].'-'.$date.'-'.$_FILES["userfile"]['name'];
+		$config['file_name'] = $new_name;
+        $config['allowed_types'] = 'xlsx|csv';
+        $config['max_size'] = 1000;
+
+        $this->load->library('upload', $config);
+        $this->upload->overwrite = true;
+
+        $this->load->helper('directory');
+    	$map = directory_map($path);
+    	$data = $this->upload->data();
+    	$isFileExist = FALSE;
+
+    	foreach ($map as $key => $value) {
+    		if(strtolower($value) == strtolower($data["file_name"])){
+    			$isFileExist = TRUE;
+    		}
+    	}
+
+        if (! $this->upload->do_upload("userfile")) {
+            $error = array('error' => $this->upload->display_errors());
+            $error = $this->response('err', 'errmsg', TRUE, $error["error"]);
+			redirect('Admin/checklist');
+        } else {
+        	
+        	if (!$isFileExist) {
+	            
+	            $newpath = $path.'/'.$new_name;
+			   	$datafile = array(
+			   		'userId' => $_SESSION['user_id'],
+			   		'username'  => $_SESSION['user_name'],
+			   		'role'  => $_SESSION['role'],
+			   		'filename' => $new_name,
+			   		'file_path' => $newpath,
+			   		'status' => 'Pending'
+			   	);
+		    	$result = $this->Admin_model->create('tbl_docs', $datafile);
+		    	if($result){
+	            	$success = $this->response('scs', 'scsmsg', TRUE, 'Successfully upload.');
+	            	redirect('Admin/checklist');
+		    	}
+		    	
+	    	}else{
+	    		$where = array('filename' => $new_name);
+	    		$data = array('update_date' => date('Y-m-d H:i:s'));
+	    		$result = $this->Admin_model->update($where, 'tbl_docs', $data);
+		    	if($result){
+		    		$error = $this->response('err', 'errmsg', TRUE, 'Filename exists. It will overwrite.');
+		    	}
+			    //$error = $this->response('err', 'errmsg', TRUE, 'Filename exists. It will overwrite.');
+			    redirect('Admin/checklist');
+	    	}
+	    	
+
+        }
+
+        // in CI-4
+		// $this->validate([
+        //     'document' => [
+        //         'uploaded[document]',
+        //         'max_size[document,100]',
+        //         'mime_in[document,image/png,image/jpg,image/gif]',
+        //         'ext_in[document,png,jpg,gif]',
+        //         'max_dims[document,1024,768]',
+        //     ],
+        // ]);
+
+        // $file = $this->request->getFile('document');
+
+        // if (! $path = $file->store()) {
+        //     return view('upload_form', ['error' => 'upload failed']);
+        // }
+        // $data = ['upload_file_path' => $path];
+
+        // return view('upload_success', $data);
 	}
 
 }
