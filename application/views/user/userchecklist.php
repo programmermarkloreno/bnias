@@ -17,29 +17,6 @@
           <div class="card">
             <div class="card-body">
               <h5 class="card-title">Checklist</h5>
-              <!-- List group With Checkboxes and radios -->
-              <!-- <ul class="list-group">
-                <li class="list-group-item">
-                  <input class="form-check-input me-1" type="checkbox" value="" aria-label="...">
-                  First checkbox
-                </li>
-                <li class="list-group-item">
-                  <input class="form-check-input me-1" type="checkbox" value="" aria-label="...">
-                  Second checkbox
-                </li>
-                <li class="list-group-item">
-                  <input class="form-check-input me-1" type="checkbox" value="" aria-label="...">
-                  Third checkbox
-                </li>
-                <li class="list-group-item">
-                  <input class="form-check-input me-1" type="checkbox" value="" aria-label="...">
-                  Fourth checkbox
-                </li>
-                <li class="list-group-item">
-                  <input class="form-check-input me-1" type="checkbox" value="" aria-label="...">
-                  Fifth checkbox
-                </li>
-              </ul> --><!-- End List Checkboxes and radios -->
               <?php
                     if($error['err'] != ''){
                 ?>
@@ -86,7 +63,7 @@
                 <thead>
                   <tr>
                     <th>Filename</th>
-                    <th>Status</th>
+                    <!-- <th>Status</th> -->
                     <th>Ratings</th>
                     <th>Created At</th>
                     <th>Updated At</th>
@@ -95,11 +72,12 @@
                 <tbody>
                   <?php
                   if($files != NULL) {
-                    foreach($files as $key => $element) { 
+                    foreach($files as $key => $element) {
+
+                     $rating =  round((int)$element->ratings / 7) * 1;
                       echo "<tr>".
                                "<td>".$element->filename."</td>".
-                               "<td>".$element->status."</td>".
-                               "<td>".$element->ratings."</td>".
+                               "<td>".$rating."%</td>".
                                "<td>".$element->created_date."</td>".
                                "<td>".$element->update_date."</td>".
                             "</tr>";

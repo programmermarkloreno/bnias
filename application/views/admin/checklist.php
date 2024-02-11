@@ -41,7 +41,7 @@
                 </li>
               </ul> --><!-- End List Checkboxes and radios -->
               <!-- General Form Elements -->
-              <form class="needs-validation" novalidate action="<?php //echo base_url();?>Admin/record/submit" method="post">
+              <form class="needs-validation" novalidate action="<?php echo base_url();?>Admin/checklist" method="post">
                 <!-- <div class="row mb-3">
                   <label for="inputText" class="col-sm-2 col-form-label">Text</label>
                   <div class="col-sm-10">
@@ -63,7 +63,6 @@
                       ?>
                     </select>
                   </div>
-                  <div class="invalid-feedback">Please enter sex</div>
                 </div>
 
                 <div class="row mb-3">
@@ -81,22 +80,26 @@
                 <thead>
                   <tr>
                     <th>Filename</th>
-                    <th>Status</th>
+                    <!-- <th>Status</th> -->
                     <th>Ratings</th>
                     <th>Created At</th>
                     <th>Updated At</th>
+                    <th>Action</th>
                   </tr>
                 </thead>
                 <tbody>
                   <?php
                   if($files != NULL) {
+
                     foreach($files as $key => $element) { 
+                      $rating =  round((int)$element->ratings / 7) * 1;
                       echo "<tr>".
                                "<td>".$element->filename."</td>".
-                               "<td>".$element->status."</td>".
-                               "<td>".$element->ratings."</td>".
+                               "<td>".$rating."%</td>".
                                "<td>".$element->created_date."</td>".
                                "<td>".$element->update_date."</td>".
+                               "<td><button type='button' class='btn btn-primary' id='edit' onclick='viewRecord(".$element->userId.",".$element->id.")'><i class='bi bi-view-stacked'></i></button>
+                                  <a type='button' href='".site_url($element->file_path)."' class='btn btn-info'><i class='bi bi-cloud-download'></i></a></td>".
                             "</tr>";
                       } 
                   }
@@ -112,6 +115,9 @@
     </section>
 
   </main><!-- End #main -->
-  <script type="text/javascript">
+<script type="text/javascript">
 
+      function viewRecord(userid, docsid) {
+        window.location.href = "ratings/"+userid+"/"+docsid;
+      }
   </script>

@@ -18,14 +18,14 @@
           <div class="card">
             <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
 
-              <img src="<?php echo base_url(); ?>assets/img/profile-img.jpg" alt="Profile" class="rounded-circle">
+              <img src="<?php echo base_url(); ?>assets/img/bnias_logo.png" alt="Profile" class="rounded-circle">
               <h2><?php echo $this->session->name ?></h2>
               <h3>User</h3>
               <div class="social-links mt-2">
-                <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
+                <!-- <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
                 <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
                 <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
-                <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
+                <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a> -->
               </div>
             </div>
           </div>
@@ -51,9 +51,9 @@
                   <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-settings">Settings</button>
                 </li> -->
 
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                   <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-change-password">Change Password</button>
-                </li>
+                </li> -->
 
               </ul>
               <div class="tab-content pt-2">
@@ -70,7 +70,7 @@
                   </div>
 
                   <div class="row">
-                    <div class="col-lg-3 col-md-4 label ">Full Name</div>
+                    <div class="col-lg-3 col-md-4 label ">Name</div>
                     <div class="col-lg-9 col-md-8"><?php echo $this->session->name ?></div>
                   </div>
 
@@ -108,16 +108,16 @@
                     <div class="row mb-3">
                       <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">Profile Image</label>
                       <div class="col-md-8 col-lg-9">
-                        <img src="<?php echo base_url(); ?>assets/img/profile-img.jpg" alt="Profile">
+                        <img src="<?php echo base_url(); ?>assets/img/bnias_logo.png" alt="Profile">
                         <div class="pt-2">
-                          <a href="#" class="btn btn-primary btn-sm" title="Upload new profile image"><i class="bi bi-upload"></i></a>
-                          <a href="#" class="btn btn-danger btn-sm" title="Remove my profile image"><i class="bi bi-trash"></i></a>
+                          <!-- <a href="#" class="btn btn-primary btn-sm" title="Upload new profile image"><i class="bi bi-upload"></i></a>
+                          <a href="#" class="btn btn-danger btn-sm" title="Remove my profile image"><i class="bi bi-trash"></i></a> -->
                         </div>
                       </div>
                     </div>
 
                     <div class="row mb-3">
-                      <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Full Name</label>
+                      <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Name</label>
                       <div class="col-md-8 col-lg-9">
                         <input name="fullName" type="text" class="form-control" id="fullName" value="<?php echo $this->session->name ?>">
                       </div>
@@ -251,7 +251,7 @@
 
                 <div class="tab-pane fade pt-3" id="profile-change-password">
                   <!-- Change Password Form -->
-                  <form>
+                  <!-- <form>
 
                     <div class="row mb-3">
                       <label for="currentPassword" class="col-md-4 col-lg-3 col-form-label">Current Password</label>
@@ -277,7 +277,7 @@
                     <div class="text-center">
                       <button type="submit" class="btn btn-primary">Change Password</button>
                     </div>
-                  </form><!-- End Change Password Form -->
+                  </form> --><!-- End Change Password Form -->
 
                 </div>
 

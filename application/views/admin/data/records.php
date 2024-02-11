@@ -26,7 +26,7 @@
               <table class="table datatable">
                 <thead>
                   <tr>
-                    <th>Id</th>
+                    <th>Brgy. User</th>
                     <th>
                       Child <b>N</b>ame
                     </th>
@@ -53,33 +53,36 @@
                           $isnotadmin = TRUE;
                         } 
 
-                        foreach($resdata as $key => $element) { 
-                          $sex = ($element->sex == 1) ? 'F' : 'M';
-                          $tr = "";
-                          $tr = "<tr>".
-                                   "<td>".$element->id_record."</td>".
-                                   "<td>".$element->child_name."</td>".
-                                   "<td>".$element->guardian_name."</td>".
-                                   "<td>".$element->address."</td>".
-                                   "<td>".$sex."</td>".
-                                   "<td>".$element->birthdate."</td>".
-                                   "<td>".$element->age."</td>". 
-                                   "<td>".$element->age_in_months."</td>".
-                                   "<td>";
-                              if($isnotadmin){
-                                $tr .= "<button type='button' class='btn btn-primary' id='edit' onclick='editRecord(".$element->id_record.")'><i class='bi bi-pencil-square'></i></button>";
-                                $tr .= "<button type='button' class='btn btn-primary' id='edit' onclick='viewRecord(".$element->id_record.")'><i class='bi bi-info-circle'></i></button>";
-                              }else{
-                                $tr .= "<button type='button' class='btn btn-primary' id='edit' onclick='viewRecord(".$element->id_record.")'><i class='bi bi-info-circle'></i></button>";
-                              }
-                                $tr .= "</td></tr>";
+                        if($resdata != NULL){
 
-                              echo $tr;
-                               //  "<td>".$element->weight."</td>".
-                               // "<td>".$element->height."</td>".
-                               // "<td>".$element->weight_for_age_stat."</td>".
-                               // "<td>".$element->height_for_age_stat."</td>".
-                               // "<td>".$element->weight_for_ltht_stat."</td>".
+                          foreach($resdata as $key => $element) { 
+                            $sex = ($element->sex == 1) ? 'F' : 'M';
+                            $tr = "";
+                            $tr = "<tr>".
+                                     "<td>".$element->responsible_user."</td>".
+                                     "<td>".$element->child_name."</td>".
+                                     "<td>".$element->guardian_name."</td>".
+                                     "<td>".$element->address."</td>".
+                                     "<td>".$sex."</td>".
+                                     "<td>".$element->birthdate."</td>".
+                                     "<td>".$element->age."</td>". 
+                                     "<td>".$element->age_in_months."</td>".
+                                     "<td>";
+                                if($isnotadmin){
+                                  $tr .= "<button type='button' class='btn btn-primary' id='edit' onclick='editRecord(".$element->id_record.")'><i class='bi bi-pencil-square'></i></button>";
+                                  $tr .= "<button type='button' class='btn btn-primary' id='edit' onclick='viewRecord(".$element->id_record.")'><i class='bi bi-info-circle'></i></button>";
+                                }else{
+                                  $tr .= "<button type='button' class='btn btn-primary' id='edit' onclick='viewRecord(".$element->id_record.")'><i class='bi bi-info-circle'></i></button>";
+                                }
+                                  $tr .= "</td></tr>";
+
+                                echo $tr;
+                                 //  "<td>".$element->weight."</td>".
+                                 // "<td>".$element->height."</td>".
+                                 // "<td>".$element->weight_for_age_stat."</td>".
+                                 // "<td>".$element->height_for_age_stat."</td>".
+                                 // "<td>".$element->weight_for_ltht_stat."</td>".
+                          }
                     } ?>
                   <!-- <tr>
                     <td>Kylie Bishop</td>

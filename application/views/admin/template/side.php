@@ -138,7 +138,7 @@
       <li class="nav-item">
         <a class="nav-link collapsed" href="<?php echo base_url(); ?>Admin/checklist">
           <i class="bi bi-check"></i>
-          <span>Checklist</span>
+          <span>Audit Checklist</span>
         </a>
       </li>
       <?php if($_SESSION['role'] != 'user'){ ?>
@@ -196,12 +196,12 @@
 
       <!-- <li class="nav-heading">Pages</li> -->
 
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="<?php echo base_url(); ?>Admin/users_profile">
+      <!-- <li class="nav-item">
+        <a class="nav-link collapsed" href="<?php //echo base_url(); ?>Admin/users_profile">
           <i class="bi bi-person"></i>
           <span>Profile</span>
         </a>
-      </li> <!-- End Profile Page Nav -->
+      </li> --> <!-- End Profile Page Nav -->
 
       <!-- <li class="nav-item">
         <a class="nav-link collapsed" href="pages-faq.html">

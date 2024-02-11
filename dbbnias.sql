@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 06, 2024 at 01:10 PM
+-- Generation Time: Feb 11, 2024 at 03:03 PM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 8.0.10
 
@@ -51,15 +51,7 @@ CREATE TABLE `tblrecord` (
 --
 
 INSERT INTO `tblrecord` (`id_record`, `child_name`, `guardian_name`, `address`, `sex`, `birthdate`, `weight`, `height`, `age`, `age_in_months`, `weight_for_age_stat`, `height_for_age_stat`, `weight_for_ltht_stat`, `responsible_user`, `created_at`, `updated_at`) VALUES
-(1, 'Raymark Loreno', 'Raymark Loreno', 'St. Joseph Windfield 2 Brgy. Gulod', 2, '2001-09-09', 12.0, 12.0, 22, 267, 'N', 'N', 'Ob', 'username_test', '2023-12-09 21:22:11', '2023-12-09 21:22:11'),
-(2, 'Test', 'test', 'new Addresss', 2, '2020-09-09', 112.0, 12.0, 3, 39, 'N', 'N', 'Ob', 'username_test', '2023-12-09 21:49:10', '2023-12-11 22:03:10'),
-(3, 'my child ', 'guard', 'sample address', 2, '2021-01-01', 20.0, 164.0, 2, 35, 'N', 'N', 'Ob', 'username_test', '2023-12-09 23:14:09', '2023-12-09 23:14:09'),
-(4, 'username test edit', 'username test edit', 'St. Joseph Windfield 2 Brgy. Gulod', 2, '2021-09-09', 12.0, 121.0, 2, 27, 'N', 'N', 'Ob', 'username_test', '2023-12-10 13:31:52', '2023-12-10 13:31:52'),
-(5, 'wwe update', 'we updates', 'wew updates', 1, '2021-09-09', 121.0, 121.0, 2, 27, 'N', 'N', 'Ob', 'username_test', '2023-12-10 17:27:03', '2023-12-10 17:27:03'),
-(6, 'sds sd', 'dfssdf', 'h', 1, '1212-01-09', 12.0, 2342.0, 811, 9743, 'N', 'N', 'Ob', 'username_test', '2023-12-10 18:50:35', '2023-12-10 18:50:35'),
-(7, 'testsssss edit', 'tesssss', 'St. Joseph Windfield 2 Brgy. Gulod', 2, '1996-09-09', 123.0, 123.0, 27, 327, 'N', 'N', 'Ob', 'username_test', '2023-12-11 20:47:29', '2023-12-11 20:47:29'),
-(8, 'Test Sample', 'Test Ex', 'example', 1, '2024-01-03', 4.2, 50.7, 0, 1, 'Normal', 'Normal', 'Overweight', 'username_test', '2024-02-04 15:02:48', '2024-02-04 15:02:48'),
-(9, 'child sample edit', 'guard sample edit', 'address sample', 2, '2024-01-30', 3.4, 50.8, 0, 1, 'Normal', 'Normal', 'Normal', 'username_test', '2024-02-04 22:33:43', '2024-02-04 22:35:55');
+(1, 'Juan De la Cruz', 'Pedro De la Cruz', 'Block 1 Lot 1 Brgy. Pansol Calamba Laguna', 2, '2024-01-09', 2.9, 48.8, 0, 1, 'Severely Under Weight', 'Severely Stunted', 'Normal', 'kimjude', '2024-02-11 21:25:26', '2024-02-11 21:25:26');
 
 -- --------------------------------------------------------
 
@@ -83,16 +75,9 @@ CREATE TABLE `tbluser` (
 --
 
 INSERT INTO `tbluser` (`userId`, `name`, `email`, `username`, `pass`, `role`, `created_date`, `update_date`) VALUES
-(1, 'Raymark Loreno', 'test email', 'username_test', '098f6bcd4621d373cade4e832627b4f6', 'admin', '2023-12-08 22:59:00', '2024-02-04 22:37:09'),
-(2, 'Raymark Loreno', 'programmermarkloreno@gmail.com', 'b', '92eb5ffee6ae2fec3ad71c777531578f', '', '2023-12-09 10:48:13', '2023-12-09 10:48:13'),
-(3, 'Raymark Loreno', 'programmermarkloreno@gmail.com', 'as', 'f970e2767d0cfe75876ea857f92e319b', '', '2023-12-09 13:42:05', '2023-12-09 13:42:05'),
-(4, 'Raymark Loreno', 'programmermarkloreno@gmail.com', 'sx', 'f970e2767d0cfe75876ea857f92e319b', '', '2023-12-09 13:43:07', '2023-12-09 13:43:07'),
-(5, 'Raymark Loreno', 'programmermarkloreno@gmail.com', 'sxsd', '6226f7cbe59e99a90b5cef6f94f966fd', '', '2023-12-09 13:43:40', '2023-12-09 13:43:40'),
-(6, 'df', 'student-04-d1f7d2450bd1@qwiklabs.net', 'dsf', '6226f7cbe59e99a90b5cef6f94f966fd', '', '2023-12-09 13:44:12', '2023-12-09 13:44:12'),
-(7, 'dsf', 'student-04-d1f7d2450bd1@qwiklabs.net', 'admin', '82d5984c2a2ad4c62caf1dd073b1c91c', '', '2023-12-09 13:48:07', '2023-12-09 13:48:07'),
-(8, 'df', 'student-04-d1f7d2450bd1@qwiklabs.net', 'x', 'f970e2767d0cfe75876ea857f92e319b', '', '2023-12-09 13:49:22', '2023-12-09 13:49:22'),
-(9, 'testing testing', 'exponicean@gmail.com', 'test1', 'ee11cbb19052e40b07aac0ca060c23ee', '', '2023-12-10 13:35:49', '2023-12-10 13:35:49'),
-(10, 'New User', 'exponicean@gmail.com', 'new_user', 'ee11cbb19052e40b07aac0ca060c23ee', 'user', '2024-02-04 22:00:34', '2024-02-04 22:00:34');
+(1, 'City Admin', 'test email', 'admin', '098f6bcd4621d373cade4e832627b4f6', 'admin', '2023-12-08 22:59:00', '2024-02-04 22:37:09'),
+(12, 'Brgy. Pansol Calamba Laguna', 'kim@sample.com', 'kimjude', '7da8d13c358b9a91007593559401e37a', 'user', '2024-02-11 20:49:09', '2024-02-11 20:49:09'),
+(13, 'Brgy. Real Calamba Laguna', 'adriel@gmail.com', 'adriel123', 'a56e79be51acf3d5f5f513e29dcfa6ae', 'user', '2024-02-11 21:33:13', '2024-02-11 21:33:13');
 
 -- --------------------------------------------------------
 
@@ -282,6 +267,32 @@ INSERT INTO `tbl_boys_weight` (`id`, `age`, `sev_underweight`, `under_from`, `un
 (70, 69, 13.7, 13.8, 15.3, 15.4, 26.3),
 (71, 70, 13.8, 13.9, 15.5, 15.6, 26.6),
 (72, 71, 13.9, 14.0, 15.6, 15.7, 26.8);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_docs`
+--
+
+CREATE TABLE `tbl_docs` (
+  `id` int(50) NOT NULL,
+  `userId` int(50) NOT NULL,
+  `username` varchar(50) NOT NULL,
+  `role` varchar(50) NOT NULL,
+  `filename` varchar(1000) NOT NULL,
+  `file_path` varchar(1000) NOT NULL,
+  `status` varchar(50) NOT NULL,
+  `ratings` varchar(50) NOT NULL,
+  `created_date` datetime NOT NULL DEFAULT current_timestamp(),
+  `update_date` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `tbl_docs`
+--
+
+INSERT INTO `tbl_docs` (`id`, `userId`, `username`, `role`, `filename`, `file_path`, `status`, `ratings`, `created_date`, `update_date`) VALUES
+(1, 12, 'kimjude', 'user', 'kimjude-20240211-Batino-BNS.xlsx', 'docs/kimjude/docs/20240211/kimjude-20240211-Batino-BNS.xlsx', '', '260', '2024-02-11 21:27:47', '2024-02-11 21:30:56');
 
 -- --------------------------------------------------------
 
@@ -492,22 +503,45 @@ CREATE TABLE `tbl_logs` (
 --
 
 INSERT INTO `tbl_logs` (`id`, `user_id`, `username`, `role`, `process`, `date`) VALUES
-(1, '1', 'username_test', 'admin', 'Login', '2024-02-04 21:59:33'),
-(2, '--', 'new_user', 'User', 'Registration', '2024-02-04 22:00:34'),
-(3, '10', 'new_user', 'User', 'Login', '2024-02-04 22:00:54'),
-(4, '1', 'username_test', 'admin', 'Login', '2024-02-04 22:21:49'),
-(5, '1', 'username_test', 'admin', 'Added Record', '2024-02-04 22:33:43'),
-(6, '1', 'username_test', 'admin', 'Update Record - (ID:9)', '2024-02-04 22:35:55'),
-(7, '1', 'username_test', 'admin', 'Update Profile - (ID:1)', '2024-02-04 22:37:09'),
-(8, '1', 'username_test', 'admin', 'Login', '2024-02-06 18:57:42'),
-(9, '10', 'new_user', 'user', 'Login', '2024-02-06 18:58:49'),
-(10, '1', 'username_test', 'admin', 'Login', '2024-02-06 19:01:33'),
-(11, '10', 'new_user', 'user', 'Login', '2024-02-06 19:04:46'),
-(12, '10', 'new_user', 'user', 'Login', '2024-02-06 19:06:33'),
-(13, '1', 'username_test', 'admin', 'Login', '2024-02-06 19:07:00'),
-(14, '10', 'new_user', 'user', 'Login', '2024-02-06 19:27:48'),
-(15, '1', 'username_test', 'admin', 'Login', '2024-02-06 19:32:52'),
-(16, '1', 'username_test', 'admin', 'Login', '2024-02-06 19:39:52');
+(1, '1', 'admin', 'admin', 'Login', '2024-02-11 20:28:35'),
+(2, '1', 'admin', 'admin', 'Login', '2024-02-11 20:29:58'),
+(3, '--', 'admin', 'admin', 'Registration', '2024-02-11 20:49:09'),
+(4, '12', 'kimjude', 'user', 'Login', '2024-02-11 20:51:06'),
+(5, '1', 'admin', 'admin', 'Login', '2024-02-11 20:52:14'),
+(6, '12', 'kimjude', 'user', 'Added Record', '2024-02-11 21:25:26'),
+(7, '--', 'admin', 'admin', 'Registration', '2024-02-11 21:33:13'),
+(8, '13', 'adriel123', 'user', 'Login', '2024-02-11 21:33:36'),
+(9, '1', 'admin', 'admin', 'Login', '2024-02-11 21:34:19');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_ratings`
+--
+
+CREATE TABLE `tbl_ratings` (
+  `rate_id` int(50) NOT NULL,
+  `docs_id` int(50) NOT NULL,
+  `user_id` int(50) NOT NULL,
+  `letter` varchar(50) NOT NULL,
+  `description` varchar(50) NOT NULL,
+  `perf_rating` int(50) NOT NULL,
+  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `updated_at` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `tbl_ratings`
+--
+
+INSERT INTO `tbl_ratings` (`rate_id`, `docs_id`, `user_id`, `letter`, `description`, `perf_rating`, `created_at`, `updated_at`) VALUES
+(1, 1, 12, 'A', 'Coordination', 20, '2024-02-11 21:28:47', '2024-02-11 21:29:53'),
+(2, 1, 12, 'B', 'Advocacy and Promotion', 20, '2024-02-11 21:28:47', '2024-02-11 21:29:28'),
+(3, 1, 12, 'C', 'Planning', 20, '2024-02-11 21:28:47', '2024-02-11 21:29:32'),
+(4, 1, 12, 'D', 'Implementation', 20, '2024-02-11 21:28:47', '2024-02-11 21:29:35'),
+(5, 1, 12, 'E', 'Monitoring and Evaluation', 60, '2024-02-11 21:28:47', '2024-02-11 21:29:58'),
+(6, 1, 12, 'F', 'Resource Generation', 60, '2024-02-11 21:28:47', '2024-02-11 21:30:03'),
+(7, 1, 12, 'G', 'Documentation and record-keeping', 60, '2024-02-11 21:28:47', '2024-02-11 21:30:07');
 
 -- --------------------------------------------------------
 
@@ -828,6 +862,12 @@ ALTER TABLE `tbl_boys_weight`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `tbl_docs`
+--
+ALTER TABLE `tbl_docs`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `tbl_girls_height`
 --
 ALTER TABLE `tbl_girls_height`
@@ -844,6 +884,12 @@ ALTER TABLE `tbl_girls_weight`
 --
 ALTER TABLE `tbl_logs`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `tbl_ratings`
+--
+ALTER TABLE `tbl_ratings`
+  ADD PRIMARY KEY (`rate_id`);
 
 --
 -- Indexes for table `tbl_weight_for_length`
@@ -865,13 +911,13 @@ ALTER TABLE `tbl_weight_for_length_2`
 -- AUTO_INCREMENT for table `tblrecord`
 --
 ALTER TABLE `tblrecord`
-  MODIFY `id_record` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id_record` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `tbluser`
 --
 ALTER TABLE `tbluser`
-  MODIFY `userId` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `userId` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `tbl_boys_height`
@@ -884,6 +930,12 @@ ALTER TABLE `tbl_boys_height`
 --
 ALTER TABLE `tbl_boys_weight`
   MODIFY `id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=73;
+
+--
+-- AUTO_INCREMENT for table `tbl_docs`
+--
+ALTER TABLE `tbl_docs`
+  MODIFY `id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `tbl_girls_height`
@@ -901,7 +953,13 @@ ALTER TABLE `tbl_girls_weight`
 -- AUTO_INCREMENT for table `tbl_logs`
 --
 ALTER TABLE `tbl_logs`
-  MODIFY `id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
+-- AUTO_INCREMENT for table `tbl_ratings`
+--
+ALTER TABLE `tbl_ratings`
+  MODIFY `rate_id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `tbl_weight_for_length`

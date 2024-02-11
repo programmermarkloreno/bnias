@@ -8,7 +8,7 @@
 
               <div class="d-flex justify-content-center py-4">
                 <a href="index.html" class="logo d-flex align-items-center w-auto">
-                  <img src="<?php echo base_url();?>assets/img/logo.png" alt="">
+                  <img src="<?php echo base_url();?>assets/img/bnias_logo.png" alt="">
                   <span class="d-none d-lg-block">BNIAS</span>
                 </a>
               </div><!-- End Logo -->
@@ -61,14 +61,14 @@
 
                   <form class="row g-3 needs-validation" novalidate action="<?php echo base_url();?>Security/signup" method="post">
                     <div class="col-12">
-                      <label for="yourName" class="form-label">Your Name</label>
+                      <label for="yourName" class="form-label">Name</label>
                       <input type="text" name="name" class="form-control" id="yourName" required>
                       <div class="invalid-feedback">Please, enter your name!</div>
                     </div>
 
                     <div class="col-12">
-                      <label for="yourEmail" class="form-label">Your Email</label>
-                      <input type="email" name="email" class="form-control" id="yourEmail" required>
+                      <label for="yourEmail" class="form-label">Email</label>
+                      <input type="email" name="email" class="form-control" id="yourEmail" pattern="[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$" required>
                       <div class="invalid-feedback">Please enter a valid Email adddress!</div>
                     </div>
 
@@ -76,15 +76,15 @@
                       <label for="yourUsername" class="form-label">Username</label>
                       <div class="input-group has-validation">
                         <span class="input-group-text" id="inputGroupPrepend">@</span>
-                        <input type="text" name="username" class="form-control" id="yourUsername" required>
-                        <div class="invalid-feedback">Please choose a username.</div>
+                        <input type="text" name="username" class="form-control" id="yourUsername" pattern="[A-Za-z0-9\-_\.]{6,20}" required>
+                        <div class="invalid-feedback">Please choose a username. </div>
                       </div>
                     </div>
 
                     <div class="col-12">
                       <label for="yourPassword" class="form-label">Password</label>
-                      <input type="password" name="password" class="form-control" id="yourPassword" required>
-                      <div class="invalid-feedback">Please enter your password!</div>
+                      <input type="password" name="password" class="form-control" id="yourPassword" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" required>
+                      <div class="invalid-feedback">Must contain at least one  number and one uppercase and lowercase letter, and at least 8 or more characters</div>
                     </div>
 
                     <div class="col-12">

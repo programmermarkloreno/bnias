@@ -24,9 +24,10 @@ class Admin extends CI_Controller
 
 	public function index(){
 
-		$data = $this->datainfo($title='NIAS | Dashboard');
+		$data = $this->datainfo($title='BNIAS | Dashboard');
 
 		$table = 'tblrecord';
+		
 		$data['totalMale'] = $this->Admin_model->total($table, 'sex=2');
 		$data['totalFemale'] = $this->Admin_model->total($table, 'sex=1');
 		$data['total'] = $this->Admin_model->total($table, '');
@@ -106,9 +107,16 @@ class Admin extends CI_Controller
 
 		if($_SESSION['role'] == 'admin'){
 			$data = $this->datainfo($title='BNIAS | Admin Checklist');
+
+			$selectUser = $this->input->post("selectUser");
+			$whereUser = "";
+			if($selectUser != NULL){
+				$whereUser = array('userId' => $selectUser);
+			}
 			$whererole = array('role' => 'user');
 			$data['users'] = $this->load_records('tbluser', $whererole, 'userId');
-			$data['files'] = $this->load_records('tbl_docs', '', 'id');
+			$data['files'] = $this->load_records('tbl_docs', $whereUser, 'id');
+			$data['userID'] = $selectUser;
 
 			$this->load->view('admin/template/head', $data);
 			$this->load->view('admin/template/header', $data);
@@ -128,6 +136,154 @@ class Admin extends CI_Controller
 			$this->load->view('admin/template/footer');
 		}
 		
+	}
+
+	public function ratings($iduser="", $iddocs=""){
+
+		$data = $this->datainfo($title='BNIAS | User Ratings');
+
+		$iduser = $this->uri->segment(3);
+		$docId = $this->uri->segment(4);
+
+		$whereDocs = array('docs_id' => NULL);;
+		if($docId != NULL){
+			$whereDocs = array('docs_id' => $docId);
+		}
+		$data['ratings'] = $this->load_records('tbl_ratings', $whereDocs, '');
+		$data['iduser']  = $iduser;
+
+		$this->load->view('admin/template/head', $data);
+		$this->load->view('admin/template/header', $data);
+		$this->load->view('admin/template/side', $data);
+		$this->load->view('admin/ratings', $data);
+		$this->load->view('admin/template/footer');
+	}
+
+	public function insertRatings(){
+
+		$docs_id = $this->input->post('docs_id');
+		$user_id = $this->input->post('user_id');
+		if ($docs_id != NULL && $user_id != NULL) {
+	        
+		   	$datafile = array(
+		   		[
+		   			'docs_id'     => $docs_id,
+		   			'user_id' 	  => $user_id,
+		   			'letter'      => 'A',
+		   			'description' => 'Coordination',
+		   			'perf_rating' => 0 ],
+		   		[
+		   			'docs_id'     => $docs_id,
+		   			'user_id' 	  => $user_id,
+		   			'letter'      => 'B',
+		   			'description' => 'Advocacy and Promotion',
+		   			'perf_rating' => 0 ],
+		   		[
+		   			'docs_id'     => $docs_id,
+		   			'user_id' 	  => $user_id,
+		   			'letter'      => 'C',
+		   			'description' => 'Planning',
+		   			'perf_rating' => 0 ],
+		   		[
+		   			'docs_id'     => $docs_id,
+		   			'user_id' 	  => $user_id,
+		   			'letter'      => 'D',
+		   			'description' => 'Implementation',
+		   			'perf_rating' => 0 ],
+		   		[
+		   			'docs_id'     => $docs_id,
+		   			'user_id' 	  => $user_id,
+		   			'letter'      => 'E',
+		   			'description' => 'Monitoring and Evaluation',
+		   			'perf_rating' => 0 ],
+		   		[
+		   			'docs_id'     => $docs_id,
+		   			'user_id' 	  => $user_id,
+		   			'letter'      => 'F',
+		   			'description' => 'Resource Generation',
+		   			'perf_rating' => 0 ],
+		   		[
+		   			'docs_id'     => $docs_id,
+		   			'user_id' 	  => $user_id,
+		   			'letter'      => 'G',
+		   			'description' => 'Documentation and record-keeping',
+		   			'perf_rating' => 0 ]
+		   		);
+		   	$result = false;
+		   	foreach ($datafile as $key => $value) {
+		   		$result = $this->Admin_model->create('tbl_ratings', $value);
+		   	}
+	    	
+	    	if($result){
+            	$success = $this->response('scs', 'scsmsg', TRUE, 'Successfully Inserted.');
+            }
+            redirect('Admin/ratings/'.$user_id.'/'.$docs_id);
+        }
+
+	}
+
+	public function editratings($iduser="", $iddocs="", $rateid=""){
+
+		$data = $this->datainfo($title='BNIAS | Update Ratings');
+
+		$iduser = $this->uri->segment(3);
+		$docId = $this->uri->segment(4);
+		$idrate = $this->uri->segment(5);
+
+		$whereRate = array('rate_id' => NULL);
+		if($idrate != NULL && $iduser != NULL && $docId != NULL){
+			$whereRate = array('rate_id' => $idrate);
+		}
+		$data['ratings'] = $this->load_records('tbl_ratings', $whereRate, '');
+		$data['iduser']  = $iduser;
+
+		$this->load->view('admin/template/head', $data);
+		$this->load->view('admin/template/header', $data);
+		$this->load->view('admin/template/side', $data);
+		$this->load->view('admin/editratings', $data);
+		$this->load->view('admin/template/footer');
+	}
+
+	public function updateRatings(){
+
+		$inputRating = $this->input->post("inputRating");
+		$user_id = $this->input->post("user_id");
+		$docs_id = $this->input->post("docs_id");
+		$rate_id = $this->input->post("rate_id");
+
+		$where = array('rate_id' => $rate_id);
+		$data = array(
+			'perf_rating' => $inputRating,
+			'updated_at' => date('Y-m-d H:i:s')
+		);
+
+		$result = $this->Admin_model->update($where, 'tbl_ratings', $data);
+		 if($result){
+			$success = $this->response('scs', 'scsmsg', TRUE, 'Successfully updated record!');
+			// redirect('Admin/ratings/'.$user_id.'/'.$docs_id);
+	     }
+
+		$totratings = 0;
+		$whereDocs = array('docs_id' => $docs_id);
+		$docs = $this->load_records('tbl_ratings', $whereDocs, '');
+		if($docs != NULL){
+
+			foreach ($docs as $key => $value) {
+				$totratings = (int)$value->perf_rating + (int)$totratings;
+			}
+		}
+
+		$datadocs = array(
+			'ratings' => $totratings,
+			'update_date' => date('Y-m-d H:i:s')
+		);
+		$whereDoc = array('id' => $docs_id);
+		$docres = $this->Admin_model->update($whereDoc, 'tbl_docs', $datadocs);
+		 if($docres){
+			$success = $this->response('scs', 'scsmsg', TRUE, 'Successfully updated record!');
+			redirect('Admin/ratings/'.$user_id.'/'.$docs_id);
+	     }
+
 	}
 
 	public function record($mode=""){
@@ -376,7 +532,8 @@ class Admin extends CI_Controller
 		if (!is_dir($path)) {
 		    mkdir($path, 0777, TRUE);
 		}
-		$new_name = $_SESSION['user_name'].'-'.$date.'-'.$_FILES["userfile"]['name'];
+		$special = array(" ","!","#","$","(",")","*","+",":",";","<","=",">","?","@","[","]","^","_","`","{","|","}","~");
+		$new_name = $_SESSION['user_name'].'-'.$date.'-'.str_replace($special, '-', $_FILES["userfile"]['name']);
 		$config['file_name'] = $new_name;
         $config['allowed_types'] = 'xlsx|csv';
         $config['max_size'] = 1000;
@@ -403,14 +560,15 @@ class Admin extends CI_Controller
         	
         	if (!$isFileExist) {
 	            
+	            $path = 'docs/'.$_SESSION['user_name'].'/docs/'.$date;
 	            $newpath = $path.'/'.$new_name;
 			   	$datafile = array(
 			   		'userId' => $_SESSION['user_id'],
 			   		'username'  => $_SESSION['user_name'],
 			   		'role'  => $_SESSION['role'],
 			   		'filename' => $new_name,
-			   		'file_path' => $newpath,
-			   		'status' => 'Pending'
+			   		'file_path' => $newpath
+			   		// 'status' => 'Pending'
 			   	);
 		    	$result = $this->Admin_model->create('tbl_docs', $datafile);
 		    	if($result){

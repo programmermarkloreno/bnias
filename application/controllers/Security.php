@@ -92,7 +92,7 @@ class Security extends CI_Controller
 			$data = array(
 				'username' => $username,
 				'pass' => $password,
-				'role' => 'User',
+				'role' => 'user',
 				'name' => $name,
 				'email' => $email,
 			);

@@ -21,19 +21,6 @@
             <div class="col-xxl-4 col-md-6">
               <div class="card info-card sales-card">
 
-                <!-- <div class="filter">
-                  <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-                  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                    <li class="dropdown-header text-start">
-                      <h6>Filter</h6>
-                    </li>
-
-                    <li><a class="dropdown-item" href="#">Today</a></li>
-                    <li><a class="dropdown-item" href="#">This Month</a></li>
-                    <li><a class="dropdown-item" href="#">This Year</a></li>
-                  </ul>
-                </div> -->
-
                 <div class="card-body">
                   <h5 class="card-title">Total <span>| Male</span></h5>
 
@@ -42,8 +29,8 @@
                       <i class="bi bi-people"></i>
                     </div>
                     <div class="ps-3">
-                      <h6><?php echo $totalMale ?></h6>
-                      <span class="text-success small pt-1 fw-bold"><?php $perM = $totalMale/$total*100; echo round($perM) ?>%</span> <span class="text-muted small pt-2 ps-1"></span>
+                      <h6><?php if($totalMale != 0){ echo $totalMale; } ?></h6>
+                      <span class="text-success small pt-1 fw-bold"><?php if($totalMale != 0) { $perM = $totalMale/$total*100; echo round($perM); } ?>%</span> <span class="text-muted small pt-2 ps-1"></span>
 
                     </div>
                   </div>
@@ -55,20 +42,6 @@
             <!-- Revenue Card -->
             <div class="col-xxl-4 col-md-6">
               <div class="card info-card revenue-card">
-
-                <!-- <div class="filter">
-                  <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-                  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                    <li class="dropdown-header text-start">
-                      <h6>Filter</h6>
-                    </li>
-
-                    <li><a class="dropdown-item" href="#">Today</a></li>
-                    <li><a class="dropdown-item" href="#">This Month</a></li>
-                    <li><a class="dropdown-item" href="#">This Year</a></li>
-                  </ul>
-                </div> -->
-
                 <div class="card-body">
                   <h5 class="card-title">Total <span>| Female</span></h5>
 
@@ -77,8 +50,8 @@
                       <i class="bi bi-people"></i>
                     </div>
                     <div class="ps-3">
-                      <h6><?php echo $totalFemale ?></h6>
-                      <span class="text-success small pt-1 fw-bold"><?php $per = $totalFemale/$total*100; echo round($per) ?>%</span> <span class="text-muted small pt-2 ps-1"></span>
+                      <h6><?php if($totalFemale != 0) { echo $totalFemale; }?></h6>
+                      <span class="text-success small pt-1 fw-bold"><?php if($totalFemale != 0) { $per = $totalFemale/$total*100; echo round($per); } ?>%</span> <span class="text-muted small pt-2 ps-1"></span>
 
                     </div>
                   </div>
@@ -91,20 +64,6 @@
             <div class="col-xxl-4 col-xl-12">
 
               <div class="card info-card customers-card">
-
-                <!-- <div class="filter">
-                  <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-                  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                    <li class="dropdown-header text-start">
-                      <h6>Filter</h6>
-                    </li>
-
-                    <li><a class="dropdown-item" href="#">Today</a></li>
-                    <li><a class="dropdown-item" href="#">This Month</a></li>
-                    <li><a class="dropdown-item" href="#">This Year</a></li>
-                  </ul>
-                </div> -->
-
                 <div class="card-body">
                   <h5 class="card-title">Total <span>| Children</span></h5>
 
@@ -128,19 +87,6 @@
             <div class="col-12">
               <div class="card">
 
-                <!-- <div class="filter">
-                  <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-                  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                    <li class="dropdown-header text-start">
-                      <h6>Filter</h6>
-                    </li>
-
-                    <li><a class="dropdown-item" href="#">Today</a></li>
-                    <li><a class="dropdown-item" href="#">This Month</a></li>
-                    <li><a class="dropdown-item" href="#">This Year</a></li>
-                  </ul>
-                </div> -->
-
                 <div class="card-body">
                   <h5 class="card-title">Reports <span>/Today</span></h5>
 
@@ -152,13 +98,13 @@
                       new ApexCharts(document.querySelector("#reportsChart"), {
                         series: [{
                           name: 'Female',
-                          data: [31, 40, 28, 51, 42, 82, 56],
+                          data: [<?php if($totalFemale != 0){ echo $totalFemale; } ?>],
                         }, {
                           name: 'Male',
-                          data: [11, 32, 45, 32, 34, 52, 41]
+                          data: [<?php if($totalMale != 0){ echo $totalMale; } ?>]
                         }, {
                           name: 'Children',
-                          data: [15, 11, 32, 18, 9, 24, 11]
+                          data: [<?php echo $total ?>]
                         }],
                         chart: {
                           height: 350,
@@ -189,7 +135,7 @@
                         },
                         xaxis: {
                           type: 'datetime',
-                          categories: ["2018-09-19T00:00:00.000Z", "2018-09-19T01:30:00.000Z", "2018-09-19T02:30:00.000Z", "2018-09-19T03:30:00.000Z", "2018-09-19T04:30:00.000Z", "2018-09-19T05:30:00.000Z", "2018-09-19T06:30:00.000Z"]
+                          categories: ["2023-02-13T00:00:00.000Z"]
                         },
                         tooltip: {
                           x: {

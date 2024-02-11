@@ -66,7 +66,8 @@
 
                 <div class="col-md-6">
                   <label for="inputDate" class="form-label">Birthdate</label>
-                  <input type="date" class="form-control" name="inputDate" id="inputDate" max="<?php echo date("Y-m-d"); ?>" onchange="$.ageCalculator()" required>
+                  <input type="date" class="form-control" name="inputDate" id="inputDate" min="<?php $date = date("Y-m-d");
+echo date( "Y-m-d", strtotime( $date . "-2163 day")); ?>" max="<?php echo date("Y-m-d"); ?>" onchange="$.ageCalculator()" required>
                   <div class="invalid-feedback">Please enter birthdate</div>
                 </div>
 
@@ -86,12 +87,12 @@
                 <div class="col-md-6">
                   <label for="inputWeight" class="form-label">Weight (kg)</label>
                   <input type="number" step="any" class="form-control" name="inputWeight" id="inputWeight" oninput="$.getWeightStatus()" required>
-                  <div class="invalid-feedback">Please enter weight (kg)</div>
+                  <div class="invalid-feedback" id="inputWeightFeedback"></div>
                 </div>
                 <div class="col-md-6">
                   <label for="inputHeight" class="form-label">Height (cm)</label>
                   <input type="number" step="any" class="form-control" name="inputHeight" id="inputHeight" oninput="$.getHeightStatus()" required>
-                  <div class="invalid-feedback">Please enter height (cm)</div>
+                  <div class="invalid-feedback" id="inputHeightFeedback"></div>
                 </div>
                 
                 
@@ -201,6 +202,7 @@
 
     $.getHeightStatus = function (){
 
+        let setWeight = document.getElementById("inputWeight").value;
         let setHeight = document.getElementById("inputHeight").value;
         var issetDate = document.getElementById("inputDate").value;
         if(issetDate && heightData && setHeight){
@@ -231,16 +233,20 @@
             console.log('Height out of range.');
           }
 
-          $.setWeightLength(setMonthAge, setHeight);
-          if(weightLengthData){
-            $.getWeightLength();
-          }else {
-            console.log("A problem on getting weight length.");
-          }
-    }else{
-      console.log('Birthdate or height not set.');
-      alert("Birthdate or height not set.");
-    }
+      }else{
+        console.log('Birthdate or height not set.');
+      }
+
+      if(issetDate && setWeight && setHeight){
+        $.setWeightLength(setMonthAge, setHeight);
+      }
+
+      if(weightLengthData){
+          $.getWeightLength();
+      }else {
+        console.log("A problem on getting weight length.");
+      }
+
   }
 
   $.getWeightStatus = function (){
@@ -276,13 +282,15 @@
           console.log("Birthdate or weight not set.");
         }
 
-        if(setHeight){
+
+        if(issetDate && setWeight && setHeight){
           $.setWeightLength(setMonthAge, setHeight);
-          if(weightLengthData){
+        }
+
+        if(weightLengthData){
             $.getWeightLength();
-          }else {
-            console.log("A problem on getting weight length.");
-          }
+        }else {
+          console.log("A problem on getting weight length.");
         }
     }
 
@@ -343,6 +351,10 @@
             success: function(response){
               if(response.success){
                 heightData = response.data;
+                document.getElementById("inputHeight").min = heightData[0].severelyStunted;
+                document.getElementById("inputHeight").max = heightData[0].tall;
+
+                document.getElementById("inputHeightFeedback").innerHTML = "Please enter height between "+heightData[0].severely_stunted+" - "+heightData[0].tall+" (cm)";
                 console.log(heightData);
               }      
             },
@@ -366,6 +378,10 @@
               success: function(response){
                 if(response.success){
                   weightData = response.data;
+                  document.getElementById("inputWeight").min = weightData[0].sev_underweight;
+                  document.getElementById("inputWeight").max = weightData[0].normal_to;
+
+                  document.getElementById("inputWeightFeedback").innerHTML = "Please enter weight between "+weightData[0].sev_underweight+" - "+weightData[0].normal_to+" (kg)";
                   console.log(weightData);
                 }      
               },
